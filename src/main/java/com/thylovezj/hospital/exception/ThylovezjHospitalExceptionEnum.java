@@ -2,6 +2,7 @@ package com.thylovezj.hospital.exception;
 
 public enum ThylovezjHospitalExceptionEnum {
     REQUEST_PARAM_ERROR(10012, "参数错误"),
+    NOT_LOGIN(10010,"未登录"),
     SYSTEM_ERROR(20000, "系统异常"),
     NEED_PASSWORD(10013, "密码不能为空"),
     USERNAME_EXISTS(10014,"用户名重名"),
