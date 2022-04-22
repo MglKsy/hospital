@@ -20,6 +20,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 
+import javax.annotation.Resource;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
     @Override
     public ApiRestResponse<LoginResult> login(WxLogin wxLogin, String appid, String secret) {

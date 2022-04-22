@@ -1,0 +1,67 @@
+package com.thylovezj.hospital.pojo;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 问题
+ * @TableName xdu_hospital_problem
+ */
+@TableName(value ="xdu_hospital_problem")
+@Data
+public class Problem implements Serializable {
+    /**
+     *问题主键
+     */
+    @TableId
+    public Integer id;
+
+    /**
+     *问题题干
+     */
+    public String name;
+
+    /**
+     * 问题答案 1-a 2-b 3-c
+     */
+    public Integer answer;
+
+    /**
+     *问题种类
+     */
+    public Integer type;
+
+    /**
+     *出题人医生Id，关联出题人
+     */
+    public Integer doctorId;
+
+    /**
+     *题目创建时间
+     */
+    public Date createTime;
+
+    /**
+     * 题目更新时间
+     */
+    public Date updateTime;
+
+    /**
+     * 问题选项
+     */
+    public String check;
+
+    /**
+     * 问题分值
+     */
+    public Integer score;
+
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+}
