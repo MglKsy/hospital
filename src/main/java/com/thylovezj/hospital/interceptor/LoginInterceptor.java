@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 
 import com.alibaba.fastjson.JSON;
 import com.thylovezj.hospital.common.ApiRestResponse;
+import com.thylovezj.hospital.exception.ThylovezjHospitalException;
+import com.thylovezj.hospital.exception.ThylovezjHospitalExceptionEnum;
 import com.thylovezj.hospital.mapper.UserMapper;
 import com.thylovezj.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,14 +36,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("authorization");
 
         if (StrUtil.isBlank(token)){
-            response.getWriter().write(JSON.toJSONString(ApiRestResponse.error(401,"未登录")));
-            return false;
+            throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.NOT_LOGIN);
         }
         String openid = stringRedisTemplate.opsForValue().get(LOGIN_PREFIX + token);
 
         if (StrUtil.isBlank(openid)) {
-            response.getWriter().write(JSON.toJSONString(ApiRestResponse.error(401,"登录凭证已经过期，请重新登录")));
-            return false;
+            throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.LOGIN_STATUS_ERROR);
         }
         //刷新token有效时间
         stringRedisTemplate.expire(LOGIN_PREFIX + token,LOGIN_CACHE_TIME, TimeUnit.MINUTES);

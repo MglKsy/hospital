@@ -1,6 +1,7 @@
 package com.thylovezj.hospital.service.impl;
 
-import cn.hutool.core.codec.Base64;
+
+
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
