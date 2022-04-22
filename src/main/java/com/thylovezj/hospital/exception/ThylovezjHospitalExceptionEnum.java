@@ -9,6 +9,7 @@ public enum ThylovezjHospitalExceptionEnum {
     USERNAME_EXISTS(10014,"用户名重名"),
     INSERT_FAILED(10015,"插入失败"),
     ROLE_ERROR(10016,"用户权限错误"),
+    PROBLEM_NOT_ENOUGH(10017,"数据库问题不足"),
     NEED_USER_NAME(10001, "用户名不能为空");
 
     Integer code;
