@@ -32,7 +32,7 @@ public class Problem implements Serializable {
     public Integer answer;
 
     /**
-     *问题种类
+     *问题种类 0-客观题 1-主观题 2-图片题
      */
     public Integer type;
 
@@ -52,7 +52,7 @@ public class Problem implements Serializable {
     public Date updateTime;
 
     /**
-     * 问题选项
+     * 问题选项 格式[a.xxx,b.xxx,c.xxx]中间用逗号分割
      */
     public String check;
 
