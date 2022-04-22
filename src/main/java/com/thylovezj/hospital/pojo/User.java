@@ -67,6 +67,11 @@ public class User implements Serializable {
     private Integer bonus;
 
     /**
+     * 电话号码
+     */
+
+    private String phone;
+    /**
      * 创建时间
      */
     private Date createTime;

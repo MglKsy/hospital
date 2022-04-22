@@ -1,5 +1,6 @@
 package com.thylovezj.hospital.service.impl;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -11,15 +12,18 @@ import com.thylovezj.hospital.dto.WxLogin;
 import com.thylovezj.hospital.pojo.User;
 import com.thylovezj.hospital.service.UserService;
 import com.thylovezj.hospital.mapper.UserMapper;
-import com.thylovezj.hospital.util.WeChatUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
 
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import static com.thylovezj.hospital.common.RedisKeyConstant.LOGIN_CACHE_TIME;
+import static com.thylovezj.hospital.common.RedisKeyConstant.LOGIN_PREFIX;
 
 
 /**
@@ -39,23 +43,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
     @Override
     public ApiRestResponse<LoginResult> login(WxLogin wxLogin, String appid, String secret) {
-        //获取三个信息， code ency iv
+
+
         String code = wxLogin.getCode();
-        String encryptedData = wxLogin.getEncryptedData();
-        String iv = wxLogin.getIv();
+
+        String rawData = wxLogin.getRawData();
+
         //用code appid secret向微信服务器请求用户信息
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
         String replaceUrl = url.replace("{0}", appid).replace("{1}", secret).replace("{2}", code);
         //s是请求得到的字符串
         String s = HttpUtil.get(replaceUrl);
-        //将s转为 jsonObject并得到 session_Key和openid
+        //将s转为 jsonObject并得到 openid
         JSONObject jsonObject = JSON.parseObject(s);
-        String session_key = (String) jsonObject.get("session_key");
         String openid = (String) jsonObject.get("openid");
 
-        //解密获得用户信息
-        String resultJson = WeChatUtil.decryptData(encryptedData, session_key, iv);
-        User user = JSON.parseObject(resultJson, User.class);
+
+        User user = JSON.parseObject(rawData, User.class);
         user.setOpenId(openid);
 
         //检查openid是否存在于数据库
@@ -68,14 +72,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             this.save(user);
         }
         //如果存在要刷新一下最近登录时间
-        userMapper.updateUpdateTime(openid);
+        userMapper.updateLastVisitTime(openid);
         //使用uuid作为token保存在redis中
         String uuid = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(uuid,openid);
+        stringRedisTemplate.opsForValue().set(LOGIN_PREFIX +uuid,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
         log.info("uuid====>{}",uuid);
         LoginResult loginResult = new LoginResult(openid, uuid);
         return ApiRestResponse.success(loginResult);
     }
+
 }
 
 

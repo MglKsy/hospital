@@ -15,8 +15,6 @@ public class WxLogin {
 
     private String code;
 
-    private String encryptedData;
-
-    private String iv;
+    private String rawData;
 
 }
