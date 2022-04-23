@@ -12,7 +12,7 @@
 | Redis      |               | 非关系型数据库 |
 | PageHelper |               | 分页插件       |
 | swagger2   |               | 接口文档生成器 |
-| maven      |               | 项目构建工具   |
+| maven      | 3.8              | 项目构建工具   |
 
 
 
