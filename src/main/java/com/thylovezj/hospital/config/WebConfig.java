@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //不拦截以下路径
         String[] urls = new String[]{
-                "/v1/login"
+                "/v1/user/login/**"
         };
         LoginInterceptor loginInterceptor = new LoginInterceptor();
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(urls);

@@ -2,7 +2,7 @@ package com.thylovezj.hospital.service;
 
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.dto.LoginResult;
-import com.thylovezj.hospital.dto.WxLogin;
+
 import com.thylovezj.hospital.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,5 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
-    ApiRestResponse<LoginResult> login(WxLogin wxLogin, String appid, String secret);
+
+
+
+
+    ApiRestResponse<LoginResult> login(String code, String appid, String secret);
 }

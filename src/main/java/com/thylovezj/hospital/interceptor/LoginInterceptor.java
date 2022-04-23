@@ -46,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //刷新token有效时间
         stringRedisTemplate.expire(LOGIN_PREFIX + token,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
         //更新用户最后操作时间
-        userMapper.updateLastVisitTime(openid);
+        userMapper.updateTime(openid);
         return true;
     }
 }

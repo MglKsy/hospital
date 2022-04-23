@@ -26,30 +26,11 @@ public class User implements Serializable {
      */
     private Integer role;
 
-    /**
-     * 市
-     */
-    private String city;
-
-    /**
-     * 省
-     */
-    private String province;
-
-    /**
-     * 国
-     */
-    private String country;
-
-    /**
-     * 头像
-     */
-    private String avatarUrl;
 
     /**
      * 性别 女:0  男:1
      */
-    private Integer gender;
+    private Integer sex;
 
     /**
      * 个性签名
@@ -61,6 +42,10 @@ public class User implements Serializable {
      */
     private String nickName;
 
+    /**
+     * 年龄
+     */
+    private Integer age;
     /**
      * 积分
      */
@@ -76,10 +61,6 @@ public class User implements Serializable {
      */
     private Date createTime;
 
-    /**
-     * 最后登录时间
-     */
-    private Date lastVisitTime;
 
     /**
      * 用户更新时间

@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.dto.LoginResult;
-import com.thylovezj.hospital.dto.WxLogin;
+
 import com.thylovezj.hospital.pojo.User;
 import com.thylovezj.hospital.service.UserService;
 import com.thylovezj.hospital.mapper.UserMapper;
@@ -44,12 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Resource
     private UserMapper userMapper;
     @Override
-    public ApiRestResponse<LoginResult> login(WxLogin wxLogin, String appid, String secret) {
-
-
-        String code = wxLogin.getCode();
-
-        String rawData = wxLogin.getRawData();
+    public ApiRestResponse<LoginResult> login(String code, String appid, String secret) {
 
         //用code appid secret向微信服务器请求用户信息
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid={0}&secret={1}&js_code={2}&grant_type=authorization_code";
@@ -61,9 +56,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String openid = (String) jsonObject.get("openid");
 
 
-        User user = JSON.parseObject(rawData, User.class);
-        user.setOpenId(openid);
-
         //检查openid是否存在于数据库
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getOpenId,openid);
@@ -71,17 +63,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         //如果该用户不存在于数据库,先存到数据库中
         if (count == 0){
+            User user = new User();
+            user.setOpenId(openid);
             this.save(user);
         }
         //如果存在要刷新一下最近登录时间
-        userMapper.updateLastVisitTime(openid);
+        userMapper.updateTime(openid);
         //使用uuid作为token保存在redis中
-        String uuid = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(LOGIN_PREFIX +uuid,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
-        log.info("uuid====>{}",uuid);
-        LoginResult loginResult = new LoginResult(openid, uuid);
+        String sessionId = UUID.randomUUID().toString();
+        stringRedisTemplate.opsForValue().set(LOGIN_PREFIX +sessionId,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
+        log.info("uuid====>{}",sessionId);
+        LoginResult loginResult = new LoginResult(openid, sessionId);
         return ApiRestResponse.success(loginResult);
     }
+
+
 
 }
 
