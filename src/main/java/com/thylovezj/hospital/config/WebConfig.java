@@ -2,6 +2,7 @@ package com.thylovezj.hospital.config;
 
 
 import com.thylovezj.hospital.interceptor.LoginInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,6 +11,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Bean LoginInterceptor loginInterceptor(){
+        return new LoginInterceptor();
+    }
+
     //配置拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -17,8 +23,8 @@ public class WebConfig implements WebMvcConfigurer {
         String[] urls = new String[]{
                 "/v1/user/login/**"
         };
-        LoginInterceptor loginInterceptor = new LoginInterceptor();
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns(urls);
+
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/**").excludePathPatterns(urls);
     }
 
 }
