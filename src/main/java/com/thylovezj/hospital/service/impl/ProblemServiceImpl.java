@@ -9,16 +9,20 @@ import com.thylovezj.hospital.mapper.ProblemMapper;
 import com.thylovezj.hospital.mapper.UserMapper;
 import com.thylovezj.hospital.pojo.Problem;
 import com.thylovezj.hospital.pojo.User;
+import com.thylovezj.hospital.request.ProblemReq;
 import com.thylovezj.hospital.service.ProblemService;
 import com.thylovezj.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,5 +54,13 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
             problems.add(problemVo);
         }
         return problems;
+    }
+
+
+    @Override
+    public void addProblem(ProblemReq problemReq){
+        Problem problem = new Problem();
+        BeanUtils.copyProperties(problemReq,problem);
+        problemMapper.insert(problem);
     }
 }

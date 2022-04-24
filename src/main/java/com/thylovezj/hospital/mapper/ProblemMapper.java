@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.thylovezj.hospital.dto.ProblemVo;
 import com.thylovezj.hospital.pojo.Problem;
 import com.thylovezj.hospital.pojo.User;
+import com.thylovezj.hospital.request.ProblemReq;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -25,4 +27,5 @@ public interface ProblemMapper extends BaseMapper<Problem> {
 
     @Select("select count(*) from xdu_hospital_problem where type = #{type}")
     int calculateNum(@Param("type") Integer type);
+
 }
