@@ -1,5 +1,6 @@
 package com.thylovezj.hospital.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thylovezj.hospital.common.Constant;
 import com.thylovezj.hospital.dto.ProblemVo;
@@ -20,9 +21,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,6 +62,11 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     public void addProblem(ProblemReq problemReq){
         Problem problem = new Problem();
         BeanUtils.copyProperties(problemReq,problem);
-        problemMapper.insert(problem);
+        problem.setCreateTime(new DateTime());
+        problem.setUpdateTime(new DateTime());
+        int count = problemMapper.insert(problem);
+        if (count == 0){
+            throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.INSERT_FAILED);
+        }
     }
 }

@@ -38,7 +38,7 @@ public class ProblemReq implements Serializable {
     /**
      * 问题选项 格式[a.xxx,b.xxx,c.xxx]中间用逗号分割
      */
-    public String check;
+    public String checks;
 
     /**
      * 问题分值

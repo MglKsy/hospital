@@ -1,8 +1,6 @@
 package com.thylovezj.hospital.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,7 +16,7 @@ public class Problem implements Serializable {
     /**
      *问题主键
      */
-    @TableId
+    @TableId(value = "id",type = IdType.AUTO)
     public Integer id;
 
     /**
@@ -54,7 +52,7 @@ public class Problem implements Serializable {
     /**
      * 问题选项 格式[a.xxx,b.xxx,c.xxx]中间用逗号分割
      */
-    public String check;
+    public String checks;
 
     /**
      * 问题分值
