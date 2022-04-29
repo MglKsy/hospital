@@ -1,6 +1,9 @@
 package com.thylovezj.hospital.service.impl;
 
 import cn.hutool.core.date.DateTime;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thylovezj.hospital.common.Constant;
 import com.thylovezj.hospital.dto.ProblemVo;
@@ -58,15 +61,40 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     }
 
 
+    /**
+     * 添加问题方法
+     * @param problemReq
+     */
     @Override
+    @Transactional
     public void addProblem(ProblemReq problemReq){
         Problem problem = new Problem();
         BeanUtils.copyProperties(problemReq,problem);
+        //问题创建时间
         problem.setCreateTime(new DateTime());
+        //问题更新时间
         problem.setUpdateTime(new DateTime());
         int count = problemMapper.insert(problem);
         if (count == 0){
             throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.INSERT_FAILED);
         }
+    }
+
+
+    /**
+     *
+     * @param doctor_id 医生ID
+     * @param page 页数
+     * @param rows 每页记录数
+     * @return
+     */
+    @Override
+    public IPage<Problem> getProblemList(Integer doctor_id, Integer page, Integer rows){
+        Page<Problem> p = new Page<Problem>(page,rows);
+        QueryWrapper<Problem> problemQueryWrapper = new QueryWrapper<>();
+        problemQueryWrapper.eq("doctor_id",doctor_id);
+        problemQueryWrapper.orderByDesc("update_time");
+        IPage<Problem> problemPage = problemMapper.selectPage(p, problemQueryWrapper);
+        return problemPage;
     }
 }

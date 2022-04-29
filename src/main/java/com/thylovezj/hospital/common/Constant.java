@@ -11,4 +11,6 @@ public class Constant {
     public static final Integer subType = 0;
     //主观题type
     public static final Integer objType = 1;
+    //医生问题每页记录数
+    public static final Integer pageRows = 10;
 }

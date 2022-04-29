@@ -34,10 +34,10 @@ public class ProblemVo {
     /**
      * 问题选项
      */
-    private String check;
+    private String checks;
 
     /**
      * 问题分值
      */
-    private String score;
+    private int score;
 }
