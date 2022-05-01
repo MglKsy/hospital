@@ -14,7 +14,7 @@ import java.io.InputStream;
 @Service
 public class OssServiceImpl implements OssService {
 
-    //上传文件到oss
+    // 上传文件到oss
     @Override
     public String uploadAvatar(MultipartFile file) throws IOException {
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
