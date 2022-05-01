@@ -10,6 +10,7 @@ spring:
     port: 6379
     password: kkkkkk
 
+
 mybatis-plus:
   configuration:
     #配置驼峰命名
@@ -20,3 +21,12 @@ mybatis-plus:
 weixin:
   appid: wx544318af0bac3c1b
   secret: d83791872c433113abddda069aaed818
+
+#aliyun OSS存储配置
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      keyid: LTAI5t5exuxq5e71Nv2ub9DX
+      keysecret: BH1jGwnDqxT3pQnb0awkVQe7VKhFv5
+      bucketname: bucket-20020501

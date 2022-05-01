@@ -1,5 +1,6 @@
 package com.thylovezj.hospital.common;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,4 +14,7 @@ public class Constant {
     public static final Integer objType = 1;
     //医生问题每页记录数
     public static final Integer pageRows = 10;
+
+
+
 }
