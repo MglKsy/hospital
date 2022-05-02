@@ -35,5 +35,9 @@ public class CgcAnswerServiceImpl implements CgcAnswerService {
 
             cgcAnswerMapper.insert(cgcAnswer);
         }
+
+        //TODO 批改主观题答案
+
+        //TODO 生成结果
     }
 }
