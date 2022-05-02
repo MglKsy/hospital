@@ -22,10 +22,6 @@ public class UserController {
 
     @Value("${weixin.secret}")
     private String secret;
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
-
 
     @GetMapping("/login/{code}")
     public ApiRestResponse<LoginResult> handlerCode(@PathVariable("code")String code){
