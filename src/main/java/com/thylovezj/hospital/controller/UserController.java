@@ -43,9 +43,9 @@ public class UserController {
     }
 
     @PostMapping("/login/upload")
-    public ApiRestResponse uploadPic(MultipartFile file) throws IOException {
+    public ApiRestResponse uploadPic(MultipartFile file,@RequestParam String uuid) throws IOException {
         //MultipartFile为上传文件,返回值是图片存储的uri
-        String uri = ossService.uploadAvatar(file);
+        String uri = ossService.uploadAvatar(file,uuid);
         HashMap<String, String> result = new HashMap<>();
         result.put("uri",uri);
         return ApiRestResponse.success(result);

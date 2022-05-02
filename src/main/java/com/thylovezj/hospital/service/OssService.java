@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface OssService {
 
-    String uploadAvatar(MultipartFile file) throws IOException;
+    String uploadAvatar(MultipartFile file,String uuid) throws IOException;
 }
