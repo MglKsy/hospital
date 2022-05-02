@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProblemVo {
+public class CgcProblemVo {
     /**
      * 问题名
      */
@@ -39,5 +39,5 @@ public class ProblemVo {
     /**
      * 问题分值
      */
-    private int score;
+    private Double score;
 }

@@ -1,6 +1,8 @@
-package com.thylovezj.hospital.pojo;
+package com.thylovezj.hospital.request;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,15 +12,9 @@ import java.util.Date;
  * 问题
  * @TableName xdu_hospital_problem
  */
-@TableName(value ="xdu_hospital_problem")
+@TableName(value ="xdu_hospital_problem_cgc")
 @Data
-public class Problem implements Serializable {
-    /**
-     *问题主键
-     */
-    @TableId(value = "id",type = IdType.AUTO)
-    public Integer id;
-
+public class CgcProblemReq implements Serializable {
     /**
      *问题题干
      */
@@ -40,16 +36,6 @@ public class Problem implements Serializable {
     public Integer doctorId;
 
     /**
-     *题目创建时间
-     */
-    public Date createTime;
-
-    /**
-     * 题目更新时间
-     */
-    public Date updateTime;
-
-    /**
      * 问题选项 格式[a.xxx,b.xxx,c.xxx]中间用逗号分割
      */
     public String checks;
@@ -57,7 +43,7 @@ public class Problem implements Serializable {
     /**
      * 问题分值
      */
-    public Integer score;
+    public Double score;
 
 
     @TableField(exist = false)
