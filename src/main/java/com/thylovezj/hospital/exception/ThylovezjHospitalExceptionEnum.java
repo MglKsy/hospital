@@ -3,6 +3,7 @@ package com.thylovezj.hospital.exception;
 public enum ThylovezjHospitalExceptionEnum {
     REQUEST_PARAM_ERROR(10012, "参数错误"),
     NOT_LOGIN(10010,"未登录"),
+    SAVE_ERROR(10020,"保存失败"),
     LOGIN_STATUS_ERROR(10011,"登录有效期已过"),
     SYSTEM_ERROR(20000, "系统异常"),
     NEED_PASSWORD(10013, "密码不能为空"),

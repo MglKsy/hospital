@@ -29,11 +29,14 @@ public class ApiRestResponse<T> {
     }
 
     public static <T> ApiRestResponse<T> success() {
-        return new ApiRestResponse<>();
+        ApiRestResponse<T> tApiRestResponse = new ApiRestResponse<>();
+        tApiRestResponse.setStatus(OK_CODE);
+        return tApiRestResponse;
     }
 
     public static <T> ApiRestResponse<T> success(T result) {
         ApiRestResponse<T> response = new ApiRestResponse<>();
+        response.setStatus(OK_CODE);
         response.setData(result);
         return response;
     }

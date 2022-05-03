@@ -25,7 +25,7 @@ public class RefreshLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authorization = request.getHeader("authorization");
         if (StrUtil.isBlank(authorization)){
-            //throw new CustomException(CustomExceptionEnum.NOT_LOGIN);
+
             return true;
         }
         String token = stringRedisTemplate.opsForValue().get(LOGIN_USER_TOKEN + authorization);
