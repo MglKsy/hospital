@@ -24,8 +24,7 @@ import javax.annotation.Resource;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static com.thylovezj.hospital.common.RedisKeyConstant.LOGIN_CACHE_TIME;
-import static com.thylovezj.hospital.common.RedisKeyConstant.LOGIN_PREFIX;
+import static com.thylovezj.hospital.common.RedisKeyConstant.*;
 
 
 /**
@@ -71,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         userMapper.updateTime(openid);
         //使用uuid作为token保存在redis中
         String sessionId = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(LOGIN_PREFIX +sessionId,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set(LOGIN_USER_TOKEN +sessionId,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
         log.info("uuid====>{}",sessionId);
         LoginResult loginResult = new LoginResult(openid, sessionId);
         return ApiRestResponse.success(loginResult);
