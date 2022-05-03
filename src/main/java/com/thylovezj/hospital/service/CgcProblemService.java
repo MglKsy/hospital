@@ -9,11 +9,7 @@ import com.thylovezj.hospital.request.CgcProblemReq;
 import java.util.List;
 
 public interface CgcProblemService extends IService<CgcProblem> {
-    List<CgcProblemVo> getProblem(int subNum, int objNum);
 
-    void addProblem(CgcProblemReq cgcProblemReq);
-
-    IPage<CgcProblem> getProblemList(Integer doctor_id, Integer page, Integer rows);
 
     List<CgcProblemVo> getCgcProblem();
 }

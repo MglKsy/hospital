@@ -35,8 +35,9 @@ public class OssServiceImpl implements OssService {
         //获得用户Open_id
         String openId = UserHolder.getId();
 
+        //TODO 这里需要扩展各种上传，添加参数实现多种文件上传功能
         //构建上传文件路径,注意上传文件路径不能包含bucket,这里最好给一个用户名
-        String ObjectName = "xdu_hospital/user/avator/" + openId + "/" + file.getOriginalFilename();
+        String ObjectName = Constant.avatorUri + openId + "/" + file.getOriginalFilename();
 
         //你的bucketName,文件名,stream流
         ossClient.putObject(ConstantOssPropertiesUtils.BUCKET_NAME, ObjectName, inputStream);
@@ -46,6 +47,10 @@ public class OssServiceImpl implements OssService {
         //把上传文件的路径返回
         //上传uri格式https://bucket-20020501.oss-cn-beijing.aliyuncs.com/hospital/avator/118492169681.png
         String url = "https://" + ConstantOssPropertiesUtils.BUCKET_NAME + "." + ConstantOssPropertiesUtils.END_POINT + "/" + ObjectName;
+
+        //TODO 将URL存入数据库中
+
+
         return url;
     }
 }

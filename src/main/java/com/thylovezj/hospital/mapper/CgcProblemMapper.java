@@ -18,10 +18,6 @@ import java.util.List;
 @Mapper
 public interface CgcProblemMapper extends BaseMapper<CgcProblem> {
 
-    @Select("select * from xdu_hospital_problem where type = #{type} order by rand() limit #{num}")
-    List<CgcProblem> getProblem(@Param("type") Integer type, @Param("num") Integer num);
 
-    @Select("select count(*) from xdu_hospital_problem where type = #{type}")
-    int calculateNum(@Param("type") Integer type);
 
 }
