@@ -25,7 +25,6 @@ public class CgcAnswerController {
     @PostMapping("/upload")
     public ApiRestResponse uploadAnswer(@RequestBody List<CgcAnswerReq> cgcAnswerReqList){
         cgcAnswerService.uploadAns(cgcAnswerReqList);
-
         return ApiRestResponse.success();
     }
 }

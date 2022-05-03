@@ -57,7 +57,7 @@ public class CgcProblem implements Serializable {
     /**
      * 问题分值
      */
-    public Double score;
+    public double score;
 
 
     @TableField(exist = false)

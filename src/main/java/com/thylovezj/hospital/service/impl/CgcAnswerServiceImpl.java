@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -30,6 +31,7 @@ public class CgcAnswerServiceImpl implements CgcAnswerService {
     @Resource
     CgcResultMapper cgcResultMapper;
 
+    @Transactional
     @Override
     public void uploadAns(List<CgcAnswerReq> cgcAnswerReqList) {
 
@@ -40,21 +42,18 @@ public class CgcAnswerServiceImpl implements CgcAnswerService {
         Patient patient = patientService.getById(pid);
 
         //TODO 获取子女Id
-        String sonId = patient.getSonId();
+//        String sonId = patient.getSonId();
 
-        //答题日期
         Date date = new Date();
-
-
 
         //TODO 批改主观题答案
         //客观题分数
         double subScore = 0;
-        for (int i = 0;i<cgcAnswerReqList.size();i++){
+        for (int i = 0; i < cgcAnswerReqList.size(); i++) {
             CgcProblem cgcProblem = cgcProblemService.getById(cgcAnswerReqList.get(i).getQuestionId());
             //如果长谷川问题为客观题，则批改
-            if (cgcProblem.getType() == 1){
-                if (cgcProblem.getAnswer() == cgcAnswerReqList.get(i).getSubAns()){
+            if (cgcProblem.getType() == 1) {
+                if (cgcProblem.getAnswer() == cgcAnswerReqList.get(i).getSubAns()) {
                     subScore += cgcProblem.getScore();
                 }
             }
@@ -65,22 +64,22 @@ public class CgcAnswerServiceImpl implements CgcAnswerService {
         //生成结果对象
         CgcResult cgcResult = new CgcResult();
         cgcResult.setPid(pid);
-        cgcResult.setSonId(sonId);
-        cgcResult.setCreateTime(date);
+        cgcResult.setSonId("sonId");
         cgcResult.setSubScore(subScore);
         cgcResult.setObjScore(0);
+        cgcResult.setCreateTime(date);
         cgcResult.setState(1);
+        cgcResultMapper.insert(cgcResult);
         //获取到result表主键
-        int resultId = cgcResultMapper.insert(cgcResult);
+        Integer id = cgcResult.getId();
 
         for (int i = 0; i < cgcAnswerReqList.size(); i++) {
             CgcAnswer cgcAnswer = new CgcAnswer();
-            BeanUtils.copyProperties(cgcAnswerReqList.get(i),cgcAnswer);
-            cgcAnswer.setCreateTime(date);
-
+            BeanUtils.copyProperties(cgcAnswerReqList.get(i), cgcAnswer);
             //TODO 将查询到的关联子女存入属性
-            cgcAnswer.setSonId(sonId);
-            cgcAnswer.setResultId(resultId);
+            cgcAnswer.setSonId("sonId");
+            cgcAnswer.setResultId(id);
+            cgcAnswer.setCreateTime(date);
             cgcAnswerMapper.insert(cgcAnswer);
         }
     }
