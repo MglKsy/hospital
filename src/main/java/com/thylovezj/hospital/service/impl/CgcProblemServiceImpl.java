@@ -93,9 +93,8 @@ public class CgcProblemServiceImpl extends ServiceImpl<CgcProblemMapper, CgcProb
 
     @Override
     public List<CgcProblemVo> getCgcProblem() {
-        QueryWrapper<CgcProblem> problemQueryWrapper = new QueryWrapper<>();
-        problemQueryWrapper.eq("type", 3);
-        List<CgcProblem> cgcProblemList = cgcProblemMapper.selectList(problemQueryWrapper);
+        QueryWrapper queryWrapper = new QueryWrapper<>();
+        List<CgcProblem> cgcProblemList = cgcProblemMapper.selectList(queryWrapper);
         List<CgcProblemVo> cgcProblemVoList = new ArrayList<>();
         for (int i = 0; i < cgcProblemList.size(); i++) {
             CgcProblemVo cgcProblemVo = new CgcProblemVo();

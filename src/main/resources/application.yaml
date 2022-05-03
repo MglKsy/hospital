@@ -21,5 +21,13 @@ mybatis-plus:
 weixin:
   appid: wx544318af0bac3c1b
   secret: d83791872c433113abddda069aaed818
-server:
-  port: 10000
+
+
+#aliyun OSS存储配置
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-beijing.aliyuncs.com
+      keyid:
+      keysecret:
+      bucketname: bucket-20020501

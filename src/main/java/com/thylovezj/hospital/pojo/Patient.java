@@ -51,6 +51,16 @@ public class Patient implements Serializable {
      */
     private String childPhotos;
 
+    /**
+     * 子女Id
+     */
+    private String sonId;
+
+    /**
+     * 医生Id
+     */
+    private String doctorId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

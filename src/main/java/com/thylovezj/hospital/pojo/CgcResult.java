@@ -10,52 +10,51 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 长谷川回答表
+ * 结果表 xdu_hospital_result_cgc
  */
-
-@TableName(value = "xdu_hospital_answer_cgc")
+@TableName(value = "xdu_hospital_result_cgc")
 @Data
-public class CgcAnswer implements Serializable {
+public class CgcResult implements Serializable {
     /**
-     * 问题主键
+     * 结果表主键
      */
     @TableId(value = "id", type = IdType.AUTO)
-    public Integer id;
+    private Integer id;
 
     /**
-     * 用户唯一Id
+     * 病人id
      */
-    public String openId;
+    private String pid;
 
     /**
-     * 子女唯一Id
+     * 病人子女Id
      */
-    public String sonId;
+    private String sonId;
 
     /**
-     * 题目Id
+     * 客观题分数
      */
-    public Integer questionId;
+    private double subScore;
 
     /**
-     * 客观题用户作答
+     * 主观题分数
      */
-    public String subAns;
+    private double objScore;
 
     /**
-     * 主观题用户作答
+     * 结果状态 1-正在批改主主观题 2-试题已全部批改结束
      */
-    public String objAns;
+    private Integer state;
 
     /**
      * 作答时间
      */
-    public Date createTime;
+    private Date createTime;
 
     /**
-     * 结果表主键
+     * 批改结束时间
      */
-    private Integer resultId;
+    private Date updateTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

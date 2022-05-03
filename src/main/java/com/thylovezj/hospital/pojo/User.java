@@ -27,9 +27,6 @@ public class User implements Serializable {
      */
     private Integer role;
 
-
-
-
     private LocalDateTime createTime;
 
 
