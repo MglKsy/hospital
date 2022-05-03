@@ -16,7 +16,6 @@ import javax.annotation.Resource;
 
 //@Configuration
 //public class WebConfig implements WebMvcConfigurer {
-//
 //    @Resource
 //    private StringRedisTemplate stringRedisTemplate;
 //
@@ -28,6 +27,4 @@ import javax.annotation.Resource;
 //                .excludePathPatterns("/user/login/**")
 //                .order(1);
 //    }
-//
-//
 //}

@@ -5,6 +5,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.thylovezj.hospital.common.Constant;
 import com.thylovezj.hospital.service.OssService;
 import com.thylovezj.hospital.util.ConstantOssPropertiesUtils;
+import com.thylovezj.hospital.util.UserHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,7 +17,7 @@ public class OssServiceImpl implements OssService {
 
     // 上传文件到oss
     @Override
-    public String uploadAvatar(MultipartFile file, String openId) throws IOException {
+    public String uploadAvatar(MultipartFile file) throws IOException {
         // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
         String endpoint = ConstantOssPropertiesUtils.END_POINT;
         // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
@@ -30,6 +31,9 @@ public class OssServiceImpl implements OssService {
 
         //上传文件流
         InputStream inputStream = file.getInputStream();
+
+        //获得用户Open_id
+        String openId = UserHolder.getId();
 
         //构建上传文件路径,注意上传文件路径不能包含bucket,这里最好给一个用户名
         String ObjectName = "xdu_hospital/user/avator/" + openId + "/" + file.getOriginalFilename();
