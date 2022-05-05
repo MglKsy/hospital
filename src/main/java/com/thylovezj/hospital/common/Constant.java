@@ -14,6 +14,8 @@ public class Constant {
     public static final Integer objType = 2;
     //医生问题每页记录数
     public static final Integer pageRows = 10;
+    //一次增加的积分数
+    public static Integer addBonus = 2;
 
     //上传头像URI
     public static final String avatorUri = "xdu_hospital/user/avator/";

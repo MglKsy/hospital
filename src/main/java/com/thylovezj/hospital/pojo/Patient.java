@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -60,6 +62,21 @@ public class Patient implements Serializable {
      * 医生Id
      */
     private String doctorId;
+
+    /**
+     * 积分
+     */
+    private Integer bonus;
+
+    /**
+     * 患者姓名
+     */
+    private String pname;
+
+    /**
+     * 积分更新日期
+     */
+    private Date updateTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

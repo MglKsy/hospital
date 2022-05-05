@@ -44,5 +44,4 @@ public class UserController {
         result.put("uri", uri);
         return ApiRestResponse.success(result);
     }
-
 }
