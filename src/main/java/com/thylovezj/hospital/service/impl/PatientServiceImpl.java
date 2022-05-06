@@ -151,6 +151,7 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
 
     @Override
     public ApiRestResponse<Map<String,List<Integer>>> signRecord() {
+        // 正式开发用getSignKsy()函数获取redis的键，下面只做模拟，
         //String key = getSignKsy();
         String key = "sign:mgl:202205";
 
