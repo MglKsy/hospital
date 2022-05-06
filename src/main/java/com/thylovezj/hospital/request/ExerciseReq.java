@@ -18,11 +18,6 @@ public class ExerciseReq implements Serializable {
     private String pid;
 
     /**
-     * 子女Id
-     */
-    private String sonId;
-
-    /**
      * 训练时长
      */
     private String exTime;
@@ -31,6 +26,11 @@ public class ExerciseReq implements Serializable {
      * 训练类型
      */
     private Integer exType;
+
+    /**
+     * 训练分数
+     */
+    private Integer score;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

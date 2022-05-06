@@ -37,6 +37,11 @@ public class Exercise implements Serializable {
      */
     private Integer exType;
 
+    /**
+     * 训练得分
+     */
+    private Integer score;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

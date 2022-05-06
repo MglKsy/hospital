@@ -24,7 +24,7 @@ public class OssServiceImpl implements OssService {
         String accessKeyId = ConstantOssPropertiesUtils.KEY_ID;
         String accessKeySecret = ConstantOssPropertiesUtils.KEY_SECRET;
         // 填写Bucket名称，例如examplebucket。
-        String bucketName = ConstantOssPropertiesUtils.BUCKET_NAME;
+         String bucketName = ConstantOssPropertiesUtils.BUCKET_NAME;
 
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
@@ -33,7 +33,9 @@ public class OssServiceImpl implements OssService {
         InputStream inputStream = file.getInputStream();
 
         //获得用户Open_id
-        String openId = UserHolder.getId();
+//        String openId = UserHolder.getId();
+        String openId = "aaa";
+
 
         //TODO 这里需要扩展各种上传，添加参数实现多种文件上传功能
         //构建上传文件路径,注意上传文件路径不能包含bucket,这里最好给一个用户名

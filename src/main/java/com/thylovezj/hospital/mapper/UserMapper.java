@@ -15,8 +15,7 @@ import org.apache.ibatis.annotations.Update;
 */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
-    @Update("update xdu_hospital_user set update_time = current_timestamp where open_id = #{openid}")
-    void updateTime(String openid);
+
 }
 
 
