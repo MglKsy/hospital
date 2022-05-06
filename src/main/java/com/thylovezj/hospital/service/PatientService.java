@@ -18,9 +18,9 @@ public interface PatientService extends IService<Patient> {
 
     ApiRestResponse<String> sign();
 
-    ApiRestResponse<Map<String,Integer>> signCount();
+    ApiRestResponse<Map<String,Integer>> signCount(Integer type);
 
-    ApiRestResponse<Map<String,Integer>> signContinuousCount();
+
 
     ApiRestResponse<Map<String,List<Integer>>> signRecord();
 }

@@ -48,18 +48,16 @@ public class PatientController {
     }
 
     /**
-     * 获取连续签到天数
+     * 获取签到天数
+     * @param type type为0 查询这个月签到多少天， type为1 查询截止今天连续签到多少天（不一定是最长连续）
      * @return
      */
-    @GetMapping("/sign/count")
-    public ApiRestResponse<Map<String,Integer>> signCount(){
-        return patientService.signCount();
+    @GetMapping("/sign/count/{type}")
+    public ApiRestResponse<Map<String,Integer>> signCount(@PathVariable Integer type){
+        return patientService.signCount(type);
     }
 
-    @GetMapping("/sign/continuousCount")
-    public ApiRestResponse<Map<String,Integer>> signContinuousCount(){
-        return patientService.signContinuousCount();
-    }
+
 
     @GetMapping("/sign/signRecord")
     public ApiRestResponse<Map<String,List<Integer>>> signRecord(){
