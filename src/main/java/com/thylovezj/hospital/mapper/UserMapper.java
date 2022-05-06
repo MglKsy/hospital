@@ -3,9 +3,6 @@ package com.thylovezj.hospital.mapper;
 import com.thylovezj.hospital.pojo.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 /**
 * @author mlovek

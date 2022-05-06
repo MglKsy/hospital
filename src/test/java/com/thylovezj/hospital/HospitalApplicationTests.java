@@ -19,8 +19,7 @@ class HospitalApplicationTests {
     private StringRedisTemplate stringRedisTemplate;
     @Test
     void contextLoads() {
-        System.out.println(LocalDateTime.now());
-        System.out.println(stringRedisTemplate.opsForValue().get("name"));
+
     }
 
 }

@@ -1,7 +1,11 @@
 package com.thylovezj.hospital.service;
 
+import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.pojo.Patient;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * @author mlovek
@@ -11,4 +15,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface PatientService extends IService<Patient> {
 
     Integer addBonus();
+
+    ApiRestResponse<String> sign();
+
+    ApiRestResponse<Map<String,Integer>> signCount(Integer type);
+
+
+
+    ApiRestResponse<Map<String,List<Integer>>> signRecord();
 }

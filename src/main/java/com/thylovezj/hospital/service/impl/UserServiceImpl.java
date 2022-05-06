@@ -67,7 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             this.save(user);
         }
         //如果存在要刷新一下最近登录时间
-//        userMapper.updateTime(openid);
+
         //使用uuid作为token保存在redis中
         String sessionId = UUID.randomUUID().toString();
         stringRedisTemplate.opsForValue().set(LOGIN_USER_TOKEN +sessionId,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
@@ -75,6 +75,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         LoginResult loginResult = new LoginResult(openid, sessionId);
         return ApiRestResponse.success(loginResult);
     }
+
+
+
 }
 
 
