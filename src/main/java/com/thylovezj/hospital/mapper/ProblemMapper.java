@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface ProblemMapper extends BaseMapper<Problem> {
     @Select("select * from xdu_hospital_problem where type = #{type} order by rand() limit #{num}")
-    List<CgcProblem> getProblem(@Param("type") Integer type, @Param("num") Integer num);
+    List<Problem> getProblem(@Param("type") Integer type, @Param("num") Integer num);
 
     @Select("select count(*) from xdu_hospital_problem where type = #{type}")
     int calculateNum(@Param("type") Integer type);

@@ -12,6 +12,8 @@ public class Constant {
     public static final Integer subType = 1;
     //主观题type
     public static final Integer objType = 2;
+    //图片题type
+    public static final Integer picType = 3;
     //医生问题每页记录数
     public static final Integer pageRows = 10;
     //一次增加的积分数

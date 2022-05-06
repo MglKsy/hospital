@@ -2,7 +2,9 @@ package com.thylovezj.hospital.controller;
 
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.dto.CgcProblemVo;
+import com.thylovezj.hospital.dto.ProblemVo;
 import com.thylovezj.hospital.request.CgcProblemReq;
+import com.thylovezj.hospital.request.ProblemNumReq;
 import com.thylovezj.hospital.request.ProblemReq;
 import com.thylovezj.hospital.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,13 @@ public class ProblemController {
     ProblemService problemService;
 
     /**
-     * @param subNum 客观题数量
-     * @param objNum 主观题数量
+     *
+     * @param problemNumReq 问题数对象
      * @return
      */
     @GetMapping("/get")
-    public ApiRestResponse getQuestion(@RequestParam("sub_number") int subNum, @RequestParam("obj_number") int objNum) {
-        List<CgcProblemVo> problem = problemService.getProblem(subNum, objNum);
+    public ApiRestResponse getQuestion(@RequestBody ProblemNumReq problemNumReq) {
+        List<ProblemVo> problem = problemService.getProblem(problemNumReq.getSubNumber(), problemNumReq.getObjNumber(),problemNumReq.getPicNumber());
         return ApiRestResponse.success(problem);
     }
 

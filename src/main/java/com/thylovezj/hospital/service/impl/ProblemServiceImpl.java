@@ -7,15 +7,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.thylovezj.hospital.common.Constant;
-import com.thylovezj.hospital.dto.CgcProblemVo;
+import com.thylovezj.hospital.dto.ProblemVo;
 import com.thylovezj.hospital.exception.ThylovezjHospitalException;
 import com.thylovezj.hospital.exception.ThylovezjHospitalExceptionEnum;
 import com.thylovezj.hospital.mapper.ProblemMapper;
 
-import com.thylovezj.hospital.pojo.CgcProblem;
 import com.thylovezj.hospital.pojo.Problem;
 
-import com.thylovezj.hospital.request.CgcProblemReq;
 import com.thylovezj.hospital.request.ProblemReq;
 import com.thylovezj.hospital.service.ProblemService;
 import org.springframework.beans.BeanUtils;
@@ -32,27 +30,34 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     ProblemMapper problemMapper;
 
     @Override
-    public List<CgcProblemVo> getProblem(int subNum, int objNum) {
-        List<CgcProblemVo> problems = new ArrayList<>();
+    public List<ProblemVo> getProblem(int subNum, int objNum, int picNum) {
+        List<ProblemVo> problems = new ArrayList<>();
         //查看数据库中问题个数，sNum是客观题问题数量,oNum是主观题问题数量
         int sNum = problemMapper.calculateNum(Constant.subType);
         int oNum = problemMapper.calculateNum(Constant.objType);
+        int pNum = problemMapper.calculateNum(Constant.picType);
         //如果要返回的问题个数大于数据库存在的问题个数，那么抛出问题不足异常
-        if (subNum > sNum || objNum > oNum) {
+        if (subNum > sNum || objNum > oNum || picNum > pNum) {
             throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.PROBLEM_NOT_ENOUGH);
         }
         //获取数据库中相应的问题
-        List<CgcProblem> subCgcProblemList = problemMapper.getProblem(Constant.subType, subNum);
-        List<CgcProblem> objCgcProblemList = problemMapper.getProblem(Constant.objType, objNum);
-        for (CgcProblem subCgcProblem : subCgcProblemList) {
-            CgcProblemVo cgcProblemVo = new CgcProblemVo();
-            BeanUtils.copyProperties(subCgcProblem, cgcProblemVo);
-            problems.add(cgcProblemVo);
+        List<Problem> subProblemList = problemMapper.getProblem(Constant.subType, subNum);
+        List<Problem> objProblemList = problemMapper.getProblem(Constant.objType, objNum);
+        List<Problem> picProblemList = problemMapper.getProblem(Constant.picType, picNum);
+        for (Problem subProblem : subProblemList) {
+            ProblemVo problemVo = new ProblemVo();
+            BeanUtils.copyProperties(subProblem, problemVo);
+            problems.add(problemVo);
         }
-        for (CgcProblem objCgcProblem : objCgcProblemList) {
-            CgcProblemVo cgcProblemVo = new CgcProblemVo();
-            BeanUtils.copyProperties(objCgcProblem, cgcProblemVo);
-            problems.add(cgcProblemVo);
+        for (Problem objProblem : objProblemList) {
+            ProblemVo problemVo = new ProblemVo();
+            BeanUtils.copyProperties(objProblem, problemVo);
+            problems.add(problemVo);
+        }
+        for (Problem picProblem : picProblemList) {
+            ProblemVo problemVo = new ProblemVo();
+            BeanUtils.copyProperties(picProblem, problemVo);
+            problems.add(problemVo);
         }
         return problems;
     }
