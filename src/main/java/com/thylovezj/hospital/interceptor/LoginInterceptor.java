@@ -10,23 +10,32 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 将handler强转为HandlerMethod
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        // 从方法处理器中获取出要调用的方法
-        Method method = handlerMethod.getMethod();
-        // 获取出方法上的NotIntercept注解
-        NotIntercept notIntercept = method.getAnnotation(NotIntercept.class);
-        if (notIntercept != null){
+        NotIntercept annotation = getAnnotation(handler, NotIntercept.class);
+        if (annotation != null){
             return true;
         }
         if (UserHolder.getId() == null){
             throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.NOT_LOGIN);
         }
         return true;
+    }
+
+    protected <A extends Annotation> A getAnnotation(Object handler, Class<A> annotationType) {
+        if (!(handler instanceof HandlerMethod)) {
+            return null;
+        }
+        HandlerMethod handlerMethod = ((HandlerMethod) handler);
+        A a = handlerMethod.getMethodAnnotation(annotationType);
+        if (a == null) {
+            //判断类是否有注解
+            a = handlerMethod.getBeanType().getAnnotation(annotationType);
+        }
+        return a;
     }
 }
