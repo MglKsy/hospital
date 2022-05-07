@@ -50,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String replaceUrl = url.replace("{0}", appid).replace("{1}", secret).replace("{2}", code);
         //s是请求得到的字符串
         String s = HttpUtil.get(replaceUrl);
-        //将s转为 jsonObject并得到 openid
+        //将s转为 jsonObject并得到openid 微信接口服务返回session_key和open_id
         JSONObject jsonObject = JSON.parseObject(s);
         String openid = (String) jsonObject.get("openid");
 
@@ -70,14 +70,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         //使用uuid作为token保存在redis中
         String sessionId = UUID.randomUUID().toString();
+        //失效日期:
         stringRedisTemplate.opsForValue().set(LOGIN_USER_TOKEN +sessionId,openid,LOGIN_CACHE_TIME, TimeUnit.MINUTES);
         log.info("uuid====>{}",sessionId);
         LoginResult loginResult = new LoginResult(openid, sessionId);
         return ApiRestResponse.success(loginResult);
     }
-
-
-
 }
 
 

@@ -23,7 +23,7 @@ public class ProblemController {
      * @param problemNumReq 问题数对象
      * @return
      */
-    @GetMapping("/get")
+    @PostMapping("/get")
     public ApiRestResponse getQuestion(@RequestBody ProblemNumReq problemNumReq) {
         List<ProblemVo> problem = problemService.getProblem(problemNumReq.getSubNumber(), problemNumReq.getObjNumber(),problemNumReq.getPicNumber());
         return ApiRestResponse.success(problem);

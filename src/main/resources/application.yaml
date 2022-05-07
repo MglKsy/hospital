@@ -18,7 +18,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 weixin:
-  appid:
+  appid: wx535c17fd80210503
   secret:
 
 

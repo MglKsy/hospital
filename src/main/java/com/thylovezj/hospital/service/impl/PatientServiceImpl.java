@@ -10,7 +10,6 @@ import com.thylovezj.hospital.service.PatientService;
 import com.thylovezj.hospital.mapper.PatientMapper;
 import com.thylovezj.hospital.util.UserHolder;
 import io.swagger.models.auth.In;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -156,9 +155,11 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
         String key = "sign:mgl:202205";
 
         List<Long> result = getResult(key);
+        //如果为空,说明该用户无签到
         if (result == null || result.isEmpty()){
             return null;
         }
+
         Long num = result.get(0);
         if (num==null || num == 0){
             return null;
@@ -181,9 +182,13 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
         return ApiRestResponse.success(map);
     }
 
+
+    //获取前面的字符串sign:open_id:202205
     public String getSignKsy(){
         return SIGN_USER_KEY + UserHolder.getId() + LocalDateTime.now().format(DateTimeFormatter.ofPattern(":yyyyMM"));
     }
+
+
     public List<Long> getResult(String key){
 
         int dayOfMonth = LocalDateTime.now().getDayOfMonth();
