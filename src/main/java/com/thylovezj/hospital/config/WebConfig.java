@@ -24,7 +24,6 @@ import javax.annotation.Resource;
 //        registry.addInterceptor(new RefreshLoginInterceptor(stringRedisTemplate))
 //                .order(0);
 //        registry.addInterceptor(new LoginInterceptor())
-//                .excludePathPatterns("/user/login/**")
 //                .order(1);
 //    }
 //}
