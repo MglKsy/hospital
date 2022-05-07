@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 
-//
+
 //@Configuration
 //public class WebConfig implements WebMvcConfigurer {
 //    @Resource
@@ -24,7 +24,6 @@ import javax.annotation.Resource;
 //        registry.addInterceptor(new RefreshLoginInterceptor(stringRedisTemplate))
 //                .order(0);
 //        registry.addInterceptor(new LoginInterceptor())
-//                .excludePathPatterns("/v1/user/login/**")
 //                .order(1);
 //    }
 //}

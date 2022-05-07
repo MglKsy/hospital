@@ -2,6 +2,7 @@ package com.thylovezj.hospital.controller;
 
 
 import com.thylovezj.hospital.common.ApiRestResponse;
+import com.thylovezj.hospital.customInterface.NotIntercept;
 import com.thylovezj.hospital.dto.LoginResult;
 
 import com.thylovezj.hospital.service.OssService;
@@ -30,6 +31,7 @@ public class UserController {
     @Value("${weixin.secret}")
     private String secret;
 
+    @NotIntercept
     @GetMapping("/login/{code}")
     public ApiRestResponse<LoginResult> handlerCode(@PathVariable("code") String code) {
 
