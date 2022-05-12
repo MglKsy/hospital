@@ -33,8 +33,7 @@ public class OssServiceImpl implements OssService {
         InputStream inputStream = file.getInputStream();
 
         //获得用户Open_id
-//        String openId = UserHolder.getId();
-        String openId = "aaa";
+        String openId = UserHolder.getId();
 
 
         //TODO 这里需要扩展各种上传，添加参数实现多种文件上传功能

@@ -31,7 +31,7 @@ public class ProblemReq implements Serializable {
     /**
      *出题人医生Id，关联出题人
      */
-    public Integer doctorId;
+    public String doctorId;
 
     /**
      * 问题选项 格式[a.xxx,b.xxx,c.xxx]中间用逗号分割

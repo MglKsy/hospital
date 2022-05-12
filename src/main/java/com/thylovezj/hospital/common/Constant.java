@@ -1,5 +1,6 @@
 package com.thylovezj.hospital.common;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,5 +22,6 @@ public class Constant {
 
     //上传头像URI
     public static final String avatorUri = "xdu_hospital/user/avator/";
+
 
 }

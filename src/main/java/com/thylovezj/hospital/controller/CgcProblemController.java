@@ -1,5 +1,6 @@
 package com.thylovezj.hospital.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.dto.CgcProblemVo;
 import com.thylovezj.hospital.request.CgcProblemReq;
@@ -22,7 +23,7 @@ public class CgcProblemController {
      * @return 返回长谷川问题表
      */
     @GetMapping("/getcgc")
-    public ApiRestResponse getCgcProblem(){
+    public ApiRestResponse getCgcProblem() throws JsonProcessingException {
         List<CgcProblemVo> problemList = cgcProblemService.getCgcProblem();
         return ApiRestResponse.success(problemList);
     }

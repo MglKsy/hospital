@@ -23,13 +23,16 @@ public class RefreshLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //获取请求头中的token
         String authorization = request.getHeader("authorization");
+        //如果token为空
         if (StrUtil.isBlank(authorization)){
-
+            //不存在，拦截
             return true;
         }
         String token = stringRedisTemplate.opsForValue().get(LOGIN_USER_TOKEN + authorization);
         if (StrUtil.isBlank(token)){
+            //token为空
             return true;
         }
         //刷新有效期

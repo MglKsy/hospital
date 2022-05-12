@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @TableName(value ="xdu_hospital_exercise")
 @Data
@@ -41,6 +42,11 @@ public class Exercise implements Serializable {
      * 训练得分
      */
     private Integer score;
+
+    /**
+     * 训练日期(结束)
+     */
+    private Date exDate;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

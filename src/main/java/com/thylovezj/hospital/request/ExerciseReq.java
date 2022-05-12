@@ -12,10 +12,6 @@ import java.io.Serializable;
 @TableName(value = "xdu_hospital_exercise")
 @Data
 public class ExerciseReq implements Serializable {
-    /**
-     * 病人Id
-     */
-    private String pid;
 
     /**
      * 训练时长

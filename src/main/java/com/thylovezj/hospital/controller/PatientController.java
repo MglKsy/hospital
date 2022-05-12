@@ -18,6 +18,7 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
+    //TODO 这里需要确定前端提交的patient的参数，不能直接传patient对象
     @PostMapping
     public ApiRestResponse<String> save(@RequestBody Patient patient) {
         boolean save = patientService.save(patient);
