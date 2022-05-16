@@ -13,7 +13,10 @@ public enum ThylovezjHospitalExceptionEnum {
     PROBLEM_NOT_ENOUGH(10017,"数据库问题不足"),
     BONUS_ADD_ERROR(10018,"积分添加过于频繁，请稍后添加"),
     NEED_USER_NAME(10001, "用户名不能为空"),
-    SIGN_ERROR(100022,"签到失败");
+    SIGN_ERROR(100022,"签到失败"),
+    UPLOAD_SONG_FAILED(100023,"添加音乐失败"),
+    REPEAT_ADD_SONG(100024,"音乐已经添加"),
+    ALREADY_DELETE_SONG(100025,"歌曲已经删除");
 
     Integer code;
     String msg;

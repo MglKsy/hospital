@@ -12,10 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-04-21 16:31:19
 */
 public interface UserService extends IService<User> {
-
-
-
-
-
     ApiRestResponse<LoginResult> login(String code, String appid, String secret);
 }

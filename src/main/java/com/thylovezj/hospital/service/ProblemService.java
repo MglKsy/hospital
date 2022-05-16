@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface ProblemService extends IService<Problem> {
-    List<ProblemVo> getProblem(int subNum, int objNum,int picNum);
+    List<ProblemVo> getProblem(int subNum, int objNum, int picNum);
 
     @Transactional
     void addProblem(ProblemReq problemReq);

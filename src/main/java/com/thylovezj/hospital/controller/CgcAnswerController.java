@@ -4,6 +4,7 @@ import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.pojo.CgcAnswer;
 import com.thylovezj.hospital.request.CgcAnswerReq;
 import com.thylovezj.hospital.service.CgcAnswerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/v1/answer")
+@Slf4j
 public class CgcAnswerController {
     @Resource
     CgcAnswerService cgcAnswerService;

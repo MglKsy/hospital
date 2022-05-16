@@ -5,6 +5,7 @@ import com.thylovezj.hospital.exception.ThylovezjHospitalExceptionEnum;
 import com.thylovezj.hospital.pojo.Patient;
 import com.thylovezj.hospital.service.PatientService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/patient")
+@Slf4j
 public class PatientController {
 
     @Autowired

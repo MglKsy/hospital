@@ -7,6 +7,7 @@ import com.thylovezj.hospital.request.CgcProblemReq;
 import com.thylovezj.hospital.request.ProblemNumReq;
 import com.thylovezj.hospital.request.ProblemReq;
 import com.thylovezj.hospital.service.ProblemService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/problem")
+@Slf4j
 public class ProblemController {
     @Autowired
     ProblemService problemService;

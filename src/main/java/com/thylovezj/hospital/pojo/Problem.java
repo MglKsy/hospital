@@ -9,6 +9,9 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 歌曲表
+ */
 @TableName(value ="xdu_hospital_problem")
 @Data
 public class Problem implements Serializable {
