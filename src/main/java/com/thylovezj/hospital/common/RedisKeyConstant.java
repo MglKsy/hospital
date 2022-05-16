@@ -12,5 +12,4 @@ public class RedisKeyConstant {
     public static final ObjectMapper mapper = new ObjectMapper();
     public static final String SIGN_USER_KEY = "sign:";
     public static final String PROBLEM_CGC_KEY = "cache:problem:cgc";
-    public static final String SONG_KEY = "cache:song:";
 }
