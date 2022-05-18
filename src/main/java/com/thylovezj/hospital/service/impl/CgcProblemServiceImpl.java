@@ -55,11 +55,18 @@ public class CgcProblemServiceImpl extends ServiceImpl<CgcProblemMapper, CgcProb
         QueryWrapper queryWrapper = new QueryWrapper<>();
         List<CgcProblem> cgcProblemList = cgcProblemMapper.selectList(queryWrapper);
         List<CgcProblemVo> cgcProblemVoList = new ArrayList<>();
-        for (CgcProblem cgcProblem:cgcProblemList) {
+
+        cgcProblemList.stream().forEach((cgcProblem -> {
             CgcProblemVo cgcProblemVo = new CgcProblemVo();
             BeanUtils.copyProperties(cgcProblem, cgcProblemVo);
             cgcProblemVoList.add(cgcProblemVo);
-        }
+        }));
+
+//        for (CgcProblem cgcProblem:cgcProblemList) {
+//            CgcProblemVo cgcProblemVo = new CgcProblemVo();
+//            BeanUtils.copyProperties(cgcProblem, cgcProblemVo);
+//            cgcProblemVoList.add(cgcProblemVo);
+//        }
         //将List序列化为String进行存储
         String json = RedisKeyConstant.mapper.writeValueAsString(cgcProblemList);
         stringRedisTemplate.opsForValue().set(RedisKeyConstant.PROBLEM_CGC_KEY,json);

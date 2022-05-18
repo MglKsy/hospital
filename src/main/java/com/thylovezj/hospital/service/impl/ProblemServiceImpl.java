@@ -44,21 +44,25 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         List<Problem> subProblemList = problemMapper.getProblem(Constant.subType, subNum);
         List<Problem> objProblemList = problemMapper.getProblem(Constant.objType, objNum);
         List<Problem> picProblemList = problemMapper.getProblem(Constant.picType, picNum);
-        for (Problem subProblem : subProblemList) {
+
+        subProblemList.stream().forEach((subProblem) -> {
             ProblemVo problemVo = new ProblemVo();
             BeanUtils.copyProperties(subProblem, problemVo);
             problems.add(problemVo);
-        }
-        for (Problem objProblem : objProblemList) {
+        });
+
+        objProblemList.stream().forEach((objProblem) -> {
             ProblemVo problemVo = new ProblemVo();
             BeanUtils.copyProperties(objProblem, problemVo);
             problems.add(problemVo);
-        }
-        for (Problem picProblem : picProblemList) {
+        });
+
+        picProblemList.stream().forEach((picProblem) -> {
             ProblemVo problemVo = new ProblemVo();
             BeanUtils.copyProperties(picProblem, problemVo);
             problems.add(problemVo);
-        }
+        });
+
         return problems;
     }
 
@@ -93,9 +97,10 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     @Override
     public IPage<Problem> getProblemList(Integer doctor_id, Integer page, Integer rows) {
         Page<Problem> p = new Page<Problem>(page, rows);
-        QueryWrapper<Problem> problemQueryWrapper = new QueryWrapper<>();
-        problemQueryWrapper.eq("doctor_id", doctor_id);
-        problemQueryWrapper.orderByDesc("update_time");
+        QueryWrapper<Problem> problemQueryWrapper = new QueryWrapper<Problem>()
+                .eq("doctor_id", doctor_id).orderByDesc("update_time");
+//        problemQueryWrapper.eq("doctor_id", doctor_id);
+//        problemQueryWrapper.orderByDesc("update_time");
         IPage<Problem> problemPage = problemMapper.selectPage(p, problemQueryWrapper);
         return problemPage;
     }
