@@ -54,6 +54,11 @@ public class News implements Serializable {
      */
     private Integer likes;
 
+    /**
+     * 新闻简介
+     */
+    private String introduction;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

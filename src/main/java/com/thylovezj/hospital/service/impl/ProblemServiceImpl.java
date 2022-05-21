@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.thylovezj.hospital.common.Constant;
+import com.thylovezj.hospital.common.RedisKeyConstant;
 import com.thylovezj.hospital.dto.ProblemVo;
 import com.thylovezj.hospital.exception.ThylovezjHospitalException;
 import com.thylovezj.hospital.exception.ThylovezjHospitalExceptionEnum;
@@ -17,53 +18,109 @@ import com.thylovezj.hospital.pojo.Problem;
 import com.thylovezj.hospital.request.ProblemReq;
 import com.thylovezj.hospital.service.ProblemService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> implements ProblemService {
     @Resource
     ProblemMapper problemMapper;
+    @Resource
+    StringRedisTemplate stringRedisTemplate;
 
     @Override
     public List<ProblemVo> getProblem(int subNum, int objNum, int picNum) {
         List<ProblemVo> problems = new ArrayList<>();
-        //查看数据库中问题个数，sNum是客观题问题数量,oNum是主观题问题数量
-        int sNum = problemMapper.calculateNum(Constant.subType);
-        int oNum = problemMapper.calculateNum(Constant.objType);
-        int pNum = problemMapper.calculateNum(Constant.picType);
-        //如果要返回的问题个数大于数据库存在的问题个数，那么抛出问题不足异常
-        if (subNum > sNum || objNum > oNum || picNum > pNum) {
-            throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.PROBLEM_NOT_ENOUGH);
-        }
-        //获取数据库中相应的问题
-        List<Problem> subProblemList = problemMapper.getProblem(Constant.subType, subNum);
-        List<Problem> objProblemList = problemMapper.getProblem(Constant.objType, objNum);
-        List<Problem> picProblemList = problemMapper.getProblem(Constant.picType, picNum);
+        //去redis里查找是否有主观题，客观题和图片题的数量
+        String sNum = stringRedisTemplate.opsForValue().get(RedisKeyConstant.PROBLEM_SUB_NUM);
+        String oNum = stringRedisTemplate.opsForValue().get(RedisKeyConstant.PROBLEM_OBJ_NUM);
+        String pNum = stringRedisTemplate.opsForValue().get(RedisKeyConstant.PROBLEM_PIC_NUM);
 
-        subProblemList.stream().forEach((subProblem) -> {
-            ProblemVo problemVo = new ProblemVo();
-            BeanUtils.copyProperties(subProblem, problemVo);
-            problems.add(problemVo);
-        });
 
-        objProblemList.stream().forEach((objProblem) -> {
-            ProblemVo problemVo = new ProblemVo();
-            BeanUtils.copyProperties(objProblem, problemVo);
-            problems.add(problemVo);
-        });
+        doIt(subNum, sNum, RedisKeyConstant.PROBLEM_SUB_NUM, Constant.subType, problems);
 
-        picProblemList.stream().forEach((picProblem) -> {
-            ProblemVo problemVo = new ProblemVo();
-            BeanUtils.copyProperties(picProblem, problemVo);
-            problems.add(problemVo);
-        });
+        //如果redis里存在客观题个数
+        doIt(objNum, oNum, RedisKeyConstant.PROBLEM_OBJ_NUM, Constant.objType, problems);
+
+        doIt(picNum, pNum, RedisKeyConstant.PROBLEM_PIC_NUM, Constant.picType, problems);
 
         return problems;
+    }
+
+    /**
+     * @param num      请求的问题个数
+     * @param Num      redis里存储的题库个数
+     * @param redisKey 数据库里问题的key
+     * @param type     数据库里存储的问题类型
+     */
+    private void doIt(int num, String Num, String redisKey, Integer type, List<ProblemVo> problemVos) {
+
+        //如果redis里存在主观题个数
+        if (Num != null) {
+            int inum = Integer.parseInt(Num);
+            //判断redis里存在的主观题个数是否小于所要求获取的主观题个数
+            if (inum >= num) {
+                //大于请求主观题个数,从数据库查询出主观题
+                List<Problem> problemList = getProblems(num, redisKey);
+                problemList.stream().forEach(problem -> {
+                    ProblemVo problemVo = new ProblemVo();
+                    BeanUtils.copyProperties(problem, problemVo);
+                    problemVos.add(problemVo);
+                });
+                return;
+            }
+
+        }
+        //小于请求主观题个数
+        //去数据库查询
+        int inum = problemMapper.calculateNum(type);
+        //判断是否仍小于数据库题数
+        if (inum >= num) {
+            List<Problem> problemList = getProblems(num, redisKey);
+            problemList.stream().forEach(problem -> {
+                ProblemVo problemVo = new ProblemVo();
+                BeanUtils.copyProperties(problem, problemVo);
+                problemVos.add(problemVo);
+            });
+            String s = String.valueOf(problemList.size());
+            //默认一天过期
+            stringRedisTemplate.opsForValue().set(redisKey, s, RedisKeyConstant.PROBLEM_EXPIRE_TIME, TimeUnit.MINUTES);
+        } else {
+            throw new ThylovezjHospitalException(ThylovezjHospitalExceptionEnum.PROBLEM_NOT_ENOUGH);
+        }
+    }
+
+    /**
+     * 从数据库里获取问题列表
+     *
+     * @param Num      需要获取问题的个数
+     * @param redisKey 需要获取问题的类型
+     * @return 问题列表
+     */
+    private List<Problem> getProblems(int Num, String redisKey) {
+        int ptype;
+        switch (redisKey) {
+            case RedisKeyConstant.PROBLEM_SUB_NUM:
+                ptype = Constant.subType;
+                break;
+            case RedisKeyConstant.PROBLEM_OBJ_NUM:
+                ptype = Constant.objType;
+                break;
+            case RedisKeyConstant.PROBLEM_PIC_NUM:
+                ptype = Constant.picType;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + redisKey);
+        }
+        List<Problem> problemList = problemMapper.getProblem(ptype, Num);
+        return problemList;
     }
 
 
