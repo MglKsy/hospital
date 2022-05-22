@@ -1,4 +1,4 @@
-package com.thylovezj.hospital.pojo;
+package com.thylovezj.hospital.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -10,9 +10,7 @@ import java.util.Date;
 
 @TableName(value ="xdu_hospital_file")
 @Data
-public class File {
-    @TableId(type = IdType.AUTO)
-    private long fileId;
+public class FileVo {
 
     private String oldName;
 
