@@ -4,13 +4,12 @@ package com.thylovezj.hospital.controller;
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.dto.FileVo;
 import com.thylovezj.hospital.pojo.Folder;
+import com.thylovezj.hospital.request.FolderReq;
 import com.thylovezj.hospital.service.FileService;
 import com.thylovezj.hospital.service.FolderService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -20,7 +19,7 @@ import java.util.function.Function;
 
 @RestController
 @Slf4j
-@RequestMapping("/v1/upload")
+@RequestMapping("/v1/netdisk")
 public class NetdiskController {
     @Resource
     FileService fileService;
@@ -43,16 +42,32 @@ public class NetdiskController {
     }
 
     /**
+     * 增加文件夹
+     */
+    @PostMapping("/add/folder")
+    public ApiRestResponse addFolder(@RequestBody FolderReq folderReq){
+        folderService.addFolder(folderReq);
+        return ApiRestResponse.success();
+    }
+
+    @PostMapping("/add/file")
+    public ApiRestResponse addFile(@RequestBody MultipartFile file,@RequestParam long parentId){
+        return ApiRestResponse.success();
+    }
+
+
+    /**
      *
      *
-     * @param files 文件列表
-     * @param folders 文件夹列表
+     * @param files 列表
      * @return
      */
-    public static Map list2Map(List files,List folders){
+    public static Map list2Map(List... files){
         HashMap<String, List> stringListHashMap = new HashMap<>();
-        stringListHashMap.put("fileVos",files);
-        stringListHashMap.put("folders",folders);
+        stringListHashMap.put("fileVos",files[0]);
+        stringListHashMap.put("folders",files[1]);
         return stringListHashMap;
     }
+
+
 }

@@ -7,17 +7,27 @@ import com.thylovezj.hospital.mapper.FileMapper;
 import com.thylovezj.hospital.pojo.File;
 import com.thylovezj.hospital.service.FileService;
 import com.thylovezj.hospital.util.UserHolder;
+import io.netty.util.concurrent.SingleThreadEventExecutor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 @Service
 public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements FileService {
     @Resource
     private FileMapper fileMapper;
+
+    private ExecutorService executorService;
+
+
+    public FileServiceImpl(){
+
+    }
 
     /**
      * 根据文件夹Id查找其路径下的文件
@@ -39,5 +49,10 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             fileVos.add(fileVo);
         });
         return fileVos;
+    }
+
+    @Override
+    public void addFile(MultipartFile file, long parentId) {
+
     }
 }
