@@ -7,6 +7,7 @@ import com.thylovezj.hospital.mapper.FileMapper;
 import com.thylovezj.hospital.pojo.File;
 import com.thylovezj.hospital.service.FileService;
 import com.thylovezj.hospital.util.UserHolder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,16 +22,22 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     /**
      * 根据文件夹Id查找其路径下的文件
      */
-    public List<FileVo> getFileList(long fileId) {
+    @Override
+    public List<FileVo> getFileList(long folderId) {
         ArrayList<FileVo> fileVos = new ArrayList<>();
         //获取当前用户userId
         String uid = UserHolder.getId();
         QueryWrapper<File> fileQueryWrapper = new QueryWrapper<File>()
-                .eq("user_id", uid).eq("dir_id", fileId);
+                .eq("user_id", uid).eq("dir_id", folderId);
         /*
          * 获取了FileList
          */
         List<File> files = fileMapper.selectList(fileQueryWrapper);
+        files.stream().forEach((file)->{
+            FileVo fileVo = new FileVo();
+            BeanUtils.copyProperties(file,fileVo);
+            fileVos.add(fileVo);
+        });
         return fileVos;
     }
 }
