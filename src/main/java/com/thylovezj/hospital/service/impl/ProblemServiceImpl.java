@@ -36,7 +36,7 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
     StringRedisTemplate stringRedisTemplate;
 
     @Override
-    public List<ProblemVo> getProblem(int subNum, int objNum, int picNum) {
+    public  List<ProblemVo> getProblem(int subNum, int objNum, int picNum) {
         List<ProblemVo> problems = new ArrayList<>();
         //去redis里查找是否有主观题，客观题和图片题的数量
         String sNum = stringRedisTemplate.opsForValue().get(RedisKeyConstant.PROBLEM_SUB_NUM);
@@ -60,7 +60,7 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      * @param redisKey 数据库里问题的key
      * @param type     数据库里存储的问题类型
      */
-    private void doIt(int num, String Num, String redisKey, Integer type, List<ProblemVo> problemVos) {
+    private  void doIt(int num, String Num, String redisKey, Integer type, List<ProblemVo> problemVos) {
 
         //如果redis里存在主观题个数
         if (Num != null) {
@@ -156,8 +156,6 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         Page<Problem> p = new Page<Problem>(page, rows);
         QueryWrapper<Problem> problemQueryWrapper = new QueryWrapper<Problem>()
                 .eq("doctor_id", doctor_id).orderByDesc("update_time");
-//        problemQueryWrapper.eq("doctor_id", doctor_id);
-//        problemQueryWrapper.orderByDesc("update_time");
         IPage<Problem> problemPage = problemMapper.selectPage(p, problemQueryWrapper);
         return problemPage;
     }
