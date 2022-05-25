@@ -130,7 +130,7 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
      * @param problemReq
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addProblem(ProblemReq problemReq) {
         Problem problem = new Problem();
         BeanUtils.copyProperties(problemReq, problem);

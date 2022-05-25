@@ -1,4 +1,4 @@
-package com.thylovezj.hospital.pojo;
+package com.thylovezj.hospital.dto;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -7,19 +7,22 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @TableName(value = "xdu_hospital_folder")
 @Data
-public class Folder {
-    @TableId(type = IdType.AUTO)
-    private long folderId;
+public class FolderVo {
 
-    private String folderName;
+    public String folderName;
 
-    private String userId;
+    public String folderRemark;
 
-    private String folderRemark;
+    public String folderId;
 
-    private String parentId;
+    private List<FileVo> fileVos = new ArrayList<>();
+
+    private List<FolderVo> folderVos = new ArrayList<>();
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

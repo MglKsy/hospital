@@ -2,6 +2,7 @@ package com.thylovezj.hospital.controller;
 
 
 import com.thylovezj.hospital.common.ApiRestResponse;
+import com.thylovezj.hospital.common.Constant;
 import com.thylovezj.hospital.customInterface.NotIntercept;
 import com.thylovezj.hospital.dto.LoginResult;
 
@@ -41,7 +42,7 @@ public class UserController {
     @PostMapping("/login/upload")
     public ApiRestResponse uploadPic(@RequestBody MultipartFile file) throws IOException {
         //MultipartFile为上传文件,返回值是图片存储的uri
-        String uri = ossService.uploadAvatar(file);
+        String uri = ossService.upload(file, Constant.AVATOR_URI);
         HashMap<String, String> result = new HashMap<>();
         result.put("uri", uri);
         return ApiRestResponse.success(result);
