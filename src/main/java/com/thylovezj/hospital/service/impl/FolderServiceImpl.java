@@ -10,11 +10,13 @@ import com.thylovezj.hospital.request.FolderReq;
 import com.thylovezj.hospital.service.FolderService;
 import com.thylovezj.hospital.util.UserHolder;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+@Service
 public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> implements FolderService {
     @Resource
     private FolderMapper folderMapper;

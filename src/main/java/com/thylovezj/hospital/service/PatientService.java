@@ -23,4 +23,8 @@ public interface PatientService extends IService<Patient> {
 
 
     ApiRestResponse<Map<String,List<Integer>>> signRecord();
+
+    ApiRestResponse<String> bind(String openId);
+
+    ApiRestResponse<String> saveInfo(Patient patient);
 }

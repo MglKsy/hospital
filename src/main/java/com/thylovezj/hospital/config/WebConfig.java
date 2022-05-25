@@ -13,19 +13,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 
-//
-//@Configuration
-//public class WebConfig implements WebMvcConfigurer {
-//    @Resource
-//    private StringRedisTemplate stringRedisTemplate;
-//
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        //order用于控制拦截器顺序，值越大优先级越低
-//        registry.addInterceptor(new RefreshLoginInterceptor(stringRedisTemplate))
-//                .order(0);
-//        //TODO 需要配置拦截的URL
-//        registry.addInterceptor(new LoginInterceptor())
-//                .order(1);
-//    }
-//}
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Resource
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //order用于控制拦截器顺序，值越大优先级越低
+        registry.addInterceptor(new RefreshLoginInterceptor(stringRedisTemplate))
+                .order(0);
+        //TODO 需要配置拦截的URL
+        registry.addInterceptor(new LoginInterceptor())
+                .order(1);
+    }
+}
