@@ -202,7 +202,7 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
     @Override
     public ApiRestResponse<String> saveInfo(Patient patient) {
         LambdaQueryWrapper<Patient> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Patient::getOpenId,patient.getOpenId());
+        wrapper.eq(Patient::getSonId,UserHolder.getId());
         boolean flag = this.update(patient, wrapper);
         if (flag){
             return ApiRestResponse.success("修改老人信息成功");
