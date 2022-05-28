@@ -66,4 +66,15 @@ public class PatientController {
     public ApiRestResponse<Map<String,List<Integer>>> signRecord(){
         return patientService.signRecord();
     }
+
+
+    @PostMapping("/bind")
+    public ApiRestResponse<String> bind(String openId){
+        return patientService.bind(openId);
+    }
+
+    @PutMapping
+    public ApiRestResponse<String> saveInfo(@RequestBody Patient patient){
+        return patientService.saveInfo(patient);
+    }
 }

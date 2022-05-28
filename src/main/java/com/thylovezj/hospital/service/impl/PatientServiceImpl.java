@@ -1,5 +1,6 @@
 package com.thylovezj.hospital.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.common.Constant;
@@ -9,6 +10,7 @@ import com.thylovezj.hospital.pojo.Patient;
 import com.thylovezj.hospital.service.PatientService;
 import com.thylovezj.hospital.mapper.PatientMapper;
 import com.thylovezj.hospital.util.UserHolder;
+import io.swagger.annotations.Api;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
@@ -76,8 +78,8 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
 
     @Override
     public ApiRestResponse<String> sign() {
-        //String key = getSignKsy();
-        String key = "sign:mgl:202205";
+        String key = getSignKsy();
+//        String key = "sign:mgl:202205";
         int dayOfMonth = LocalDateTime.now().getDayOfMonth();
         stringRedisTemplate.opsForValue().setBit(key, dayOfMonth - 1, true);
         return ApiRestResponse.success("签到成功");
@@ -89,8 +91,8 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
     public ApiRestResponse<Map<String,Integer>> signCount(Integer type) {
         //1、获取key
         // 正式开发用getSignKsy()函数获取redis的键，下面只做模拟，
-        // String key = getSignKsy();
-        String key = "sign:mgl:202205";
+         String key = getSignKsy();
+//        String key = "sign:mgl:202205";
 
         //2、得到签到结果
         List<Long> result = getResult(key);
@@ -152,7 +154,8 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
     public ApiRestResponse<Map<String,List<Integer>>> signRecord() {
         // 正式开发用getSignKsy()函数获取redis的键，下面只做模拟，
         //String key = getSignKsy();
-        String key = "sign:mgl:202205";
+
+        String key = getSignKsy();
 
         List<Long> result = getResult(key);
         //如果为空,说明该用户无签到
@@ -180,6 +183,32 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
         Map<String,List<Integer>> map = new HashMap<>();
         map.put("days",list);
         return ApiRestResponse.success(map);
+    }
+
+    @Override
+    public ApiRestResponse<String> bind(String openId) {
+        String sonId = UserHolder.getId();
+        Patient patient = new Patient();
+        patient.setOpenId(openId);
+        patient.setSonId(sonId);
+        boolean flag = this.save(patient);
+        if (flag){
+            return ApiRestResponse.success();
+        }else {
+            return ApiRestResponse.error(ThylovezjHospitalExceptionEnum.BIND_ERROR);
+        }
+    }
+
+    @Override
+    public ApiRestResponse<String> saveInfo(Patient patient) {
+        LambdaQueryWrapper<Patient> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Patient::getSonId,UserHolder.getId());
+        boolean flag = this.update(patient, wrapper);
+        if (flag){
+            return ApiRestResponse.success("修改老人信息成功");
+        }else {
+            return ApiRestResponse.error(ThylovezjHospitalExceptionEnum.SAVE_PATIENT_INFO_ERROR);
+        }
     }
 
 
