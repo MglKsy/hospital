@@ -18,8 +18,8 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 weixin:
-  appid: wx535c17fd80210503
-  secret:
+  appid: wxe2338866c2fecb01
+  secret: 3f6b213dbc038a22e38517fb4985876d
 
 
 #aliyun OSS存储配置
