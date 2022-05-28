@@ -10,15 +10,18 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author thylovezj
+ */
 @TableName(value = "xdu_hospital_folder")
 @Data
 public class FolderVo {
+    @TableId(type = IdType.AUTO)
+    public String folderId;
 
     public String folderName;
 
     public String folderRemark;
-
-    public String folderId;
 
     private List<FileVo> fileVos = new ArrayList<>();
 

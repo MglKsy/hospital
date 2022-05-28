@@ -13,6 +13,7 @@ import com.thylovezj.hospital.mapper.FolderMapper;
 import com.thylovezj.hospital.pojo.File;
 import com.thylovezj.hospital.pojo.Folder;
 import com.thylovezj.hospital.request.FolderReq;
+import com.thylovezj.hospital.service.FileService;
 import com.thylovezj.hospital.service.FolderService;
 import com.thylovezj.hospital.util.UserHolder;
 import org.springframework.beans.BeanUtils;
@@ -20,33 +21,60 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
+/**
+ * @author thylovezj
+ */
 @Service
 public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> implements FolderService {
     @Resource
     private FolderMapper folderMapper;
 
     @Resource
-    private FileMapper fileMapper;
+    private FileService fileService;
 
+    /**
+     * @param folderId 获取该文件夹Id下所有文件夹
+     * @return
+     */
     @Override
-    public List<Folder> getFolders(String folderId) {
-        List<Folder> folders;
+    public List<FolderVo> getFolders(String folderId) {
+        List<FolderVo> folders;
         if (StrUtil.isBlank(folderId)) {
             //如果folderId为空，说明需要查询所有根目录下文件夹
-            QueryWrapper<Folder> queryWrapper = new QueryWrapper<Folder>()
-                    .eq("parent_id", "").eq("user_id", "sss");
-            folders = folderMapper.selectList(queryWrapper);
+            folders = FindFordersInDatabases("", "sss");
         } else {
-            QueryWrapper<Folder> folderQueryWrapper = new QueryWrapper<>();
-            QueryWrapper<Folder> queryWrapper = folderQueryWrapper
-                    .eq("parent_id", folderId).eq("user_id", "sss");
-            folders = folderMapper.selectList(queryWrapper);
+            //如果folderId不为空，说明需要查询所有folderId下的文件夹
+            folders = FindFordersInDatabases(folderId, "sss");
         }
         return folders;
+    }
+
+    /**
+     * 根据父文件夹和用户Id去数据库中查询文件夹列表
+     *
+     * @param parentId
+     * @param userId
+     * @return folderVos 符合条件的文件夹Vo
+     */
+    private List<FolderVo> FindFordersInDatabases(String parentId, String userId) {
+        List<Folder> folders;
+        QueryWrapper<Folder> queryWrapper = new QueryWrapper<Folder>()
+                .eq("parent_id", parentId).eq("user_id", userId);
+        folders = folderMapper.selectList(queryWrapper);
+        ArrayList<FolderVo> folderVos = new ArrayList<>();
+
+        folders.stream().forEach((folder -> {
+            FolderVo folderVo1 = new FolderVo();
+            BeanUtils.copyProperties(folder, folderVo1);
+            folderVo1.setFolderId(StrUtil.toString(folder.getFolderId()));
+            folderVos.add(folderVo1);
+        }));
+
+        return folderVos;
     }
 
     @Override
@@ -81,31 +109,22 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
         return folderVo;
     }
 
+    /**
+     * 获取父文件夹下所有文件与文件夹
+     *
+     * @param parentId
+     * @return
+     */
     @Override
-    public List<FileVo> listFileAndFolders(String parentId) {
+    public FolderVo listFileAndFolders(String parentId) {
         //根目录
         FolderVo folderVo = new FolderVo();
-        QueryWrapper<Folder> folderQueryWrapper = new QueryWrapper<Folder>()
-                .eq("user", "sss").eq("parent_id", parentId);
-        List<Folder> folders = folderMapper.selectList(folderQueryWrapper);
-        QueryWrapper<File> fileQueryWrapper = new QueryWrapper<File>()
-                .eq("user", "sss").eq("dir_id", "");
-        List<File> files = fileMapper.selectList(fileQueryWrapper);
-        ArrayList<FileVo> fileVos = new ArrayList<>();
-        ArrayList<FolderVo> folderVos = new ArrayList<>();
-        files.stream().forEach((file -> {
-            FileVo fileVo = new FileVo();
-            BeanUtils.copyProperties(file,fileVo);
-            fileVos.add(fileVo);
-        }));
+        List<FolderVo> folderVos = FindFordersInDatabases(parentId, "sss");
 
-        folders.stream().forEach((folder -> {
-            FolderVo folderVo1 = new FolderVo();
-            BeanUtils.copyProperties(folder,folderVo1);
-            folderVos.add(folderVo1);
-        }));
+        List<FileVo> fileVos = fileService.getFileList(parentId);
 
         folderVo.setFileVos(fileVos);
+
         folderVo.setFolderVos(folderVos);
 
         recursivelyFindFileAndFolders(folderVos);
@@ -113,6 +132,21 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
     }
 
     private void recursivelyFindFileAndFolders(List<FolderVo> folderVos) {
+        Queue<FolderVo> queue = new LinkedList<>();
+        for (FolderVo folderVo : folderVos) {
+            queue.offer(folderVo);
+        }
+        while (queue != null) {
+            FolderVo poll = queue.poll();
+            //搜寻该文件下所有文件夹和文件,将文件全部放入该poll的FileVos中
+            if (fileService.getFileList(poll.folderId) != null) {
+                poll.setFileVos(fileService.getFileList(poll.folderId));
+            }
 
+            //将文件全部放入该poll的FolderVos中,并将文件夹入队
+            if (getFolders(poll.getFolderId()) != null) {
+                poll.setFolderVos(getFolders(poll.getFolderId()));
+            }
+        }
     }
 }

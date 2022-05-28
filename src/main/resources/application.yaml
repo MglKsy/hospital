@@ -9,6 +9,10 @@ spring:
     host: 43.138.103.83
     port: 6379
     password: Xdu000000
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      enabled: true
 
 mybatis-plus:
   configuration:

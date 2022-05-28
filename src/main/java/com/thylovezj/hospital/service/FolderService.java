@@ -9,9 +9,9 @@ import com.thylovezj.hospital.request.FolderReq;
 import java.util.List;
 
 public interface FolderService extends IService<Folder> {
-    List<Folder> getFolders(String folderId);
+    List<FolderVo> getFolders(String folderId);
 
     FolderVo addFolder(FolderReq folderReq);
 
-    List<FileVo> listFileAndFolders(String folderId);
+    FolderVo listFileAndFolders(String folderId);
 }

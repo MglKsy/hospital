@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author thylovezj
+ */
+
 @Data
 public class ProblemNumReq implements Serializable {
     /**

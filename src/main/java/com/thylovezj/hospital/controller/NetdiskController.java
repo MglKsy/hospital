@@ -40,7 +40,7 @@ public class NetdiskController {
 
         //跟据当前文件夹Id获取文件夹下所有文件
         List<FileVo> fileVos = fileService.getFileList(directoryId);
-        List<Folder> folders = folderService.getFolders(directoryId);
+        List<FolderVo> folders = folderService.getFolders(directoryId);
         Map result = list2Map(fileVos, folders);
         return ApiRestResponse.success(result);
     }
@@ -63,8 +63,8 @@ public class NetdiskController {
     @ApiOperation("获取该文件夹下所有文件")
     @PostMapping("/list/all")
     public ApiRestResponse listAll(){
-        folderService.listFileAndFolders("");
-        return ApiRestResponse.success();
+        FolderVo folderVo = folderService.listFileAndFolders("");
+        return ApiRestResponse.success(folderVo);
     }
 
 

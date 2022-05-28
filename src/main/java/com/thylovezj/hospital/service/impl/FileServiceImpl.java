@@ -54,18 +54,29 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
     }
 
     /**
-     * 根据文件夹Id查找其路径下的文件
+     *
+     * @param folderId 根据文件夹Id获取该文件夹下所有文件Vo对象
+     * @return
      */
     @Override
     public List<FileVo> getFileList(String folderId) {
         ArrayList<FileVo> fileVos = new ArrayList<>();
         //获取当前用户userId
         String uid = "sss";
+        return FindFilesInDatabase(folderId, fileVos, uid);
+    }
+
+    /**
+     *
+     * @param folderId
+     * @param fileVos
+     * @param uid
+     * @return
+     */
+    private ArrayList<FileVo> FindFilesInDatabase(String folderId, ArrayList<FileVo> fileVos, String uid) {
         QueryWrapper<File> fileQueryWrapper = new QueryWrapper<File>()
                 .eq("user_id", uid).eq("dir_id", folderId);
-        /*
-         * 获取了FileList
-         */
+
         List<File> files = fileMapper.selectList(fileQueryWrapper);
         files.stream().forEach((file) -> {
             FileVo fileVo = new FileVo();
