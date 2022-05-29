@@ -43,12 +43,9 @@ public class OssServiceImpl implements OssService {
         InputStream inputStream = file.getInputStream();
 
         //获得用户Open_id
-        String openId = "sss";
+        String openId = UserHolder.getId();
 
         String[] fileType = file.getOriginalFilename().split("\\.");
-
-
-        System.out.println(file.getSize());
 
         //构建上传文件路径,注意上传文件路径不能包含bucket,这里最好给一个用户名
         String ObjectName = uploadUri +"/"+ openId + "/" + UUID.randomUUID()+"."+fileType[fileType.length-1];

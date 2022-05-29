@@ -22,7 +22,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 weixin:
-  appid: wx535c17fd80210503
+  appid:
   secret:
 
 
@@ -31,6 +31,6 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-beijing.aliyuncs.com
-      keyid: LTAI5tC2jMwic1TTHWun2Aqe
-      keysecret: sRzv3VQxH5Vyxl9AUcidkoxj76nbUE
+      keyid:
+      keysecret:
       bucketname: bucket-20020501
