@@ -21,4 +21,6 @@ public class RedisKeyConstant {
     public static final String PROBLEM_PIC_NUM = "cache:problem:pic";
     //数据过期时间
     public static final long PROBLEM_EXPIRE_TIME = 24*60L;
+
+    public static final String AVATOR_URI = "xdu_hospital/user/avator";
 }

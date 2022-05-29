@@ -10,10 +10,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.thylovezj.hospital.common.ApiRestResponse;
 import com.thylovezj.hospital.dto.LoginResult;
 
+import com.thylovezj.hospital.mapper.PatientMapper;
+import com.thylovezj.hospital.pojo.Patient;
 import com.thylovezj.hospital.pojo.User;
 import com.thylovezj.hospital.service.UserService;
 import com.thylovezj.hospital.mapper.UserMapper;
 
+import com.thylovezj.hospital.util.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -42,6 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private UserMapper userMapper;
+
+    @Autowired
+    private PatientMapper patientMapper;
     @Override
     public ApiRestResponse<LoginResult> login(String code, String appid, String secret) {
 
@@ -75,6 +81,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         log.info("uuid====>{}",sessionId);
         LoginResult loginResult = new LoginResult(openid, sessionId);
         return ApiRestResponse.success(loginResult);
+    }
+
+    @Override
+    public ApiRestResponse<String> confirm() {
+        String openId = UserHolder.getId();
+        Patient patient = new Patient();
+        patient.setOpenId(openId);
+        patientMapper.insert(patient);
+        return ApiRestResponse.success("确认病患身份成功");
     }
 }
 

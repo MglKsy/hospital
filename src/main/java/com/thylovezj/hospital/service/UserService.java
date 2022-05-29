@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
     ApiRestResponse<LoginResult> login(String code, String appid, String secret);
+
+    ApiRestResponse<String> confirm();
 }
