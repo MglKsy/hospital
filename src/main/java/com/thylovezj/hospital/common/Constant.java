@@ -20,8 +20,15 @@ public class Constant {
     //一次增加的积分数
     public static Integer addBonus = 2;
 
-    //上传头像URI
-    public static final String avatorUri = "xdu_hospital/user/avator/";
+    /**
+     * 上传头像URI
+     */
+    public static final String AVATOR_URI = "xdu_hospital/user/avator";
 
+    /**
+     * 上传文件URI
+     */
+    public static final String FILE_URI = "xdu_hospital/netdisk/picture";
 
+    public static final long MAX_UPLOAD_SIZE = 10485760L;
 }

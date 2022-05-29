@@ -1,14 +1,12 @@
 package com.thylovezj.hospital.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.thylovezj.hospital.pojo.Folder;
-import org.apache.ibatis.annotations.Mapper;
-
+import com.thylovezj.hospital.pojo.Memorandum;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author thylovezj
  */
 @Mapper
-public interface FolderMapper extends BaseMapper<Folder> {
+public interface MemorandumMapper extends BaseMapper<Memorandum> {
 }

@@ -16,10 +16,13 @@ public enum ThylovezjHospitalExceptionEnum {
     SIGN_ERROR(100022,"签到失败"),
     UPLOAD_SONG_FAILED(100023,"添加音乐失败"),
     REPEAT_ADD_SONG(100024,"音乐已经添加"),
+    ALREADY_DELETE_SONG(100025,"歌曲已经删除"),
+    UPLOAD_FAILED(100026,"上传错误"),
+    UPLOAD_TOO_BIG(100027,"上传文件太大"),
     BIND_ERROR(20010,"绑定失败"),
 
     SAVE_PATIENT_INFO_ERROR(20011,"修改老人信息失败"),
-    ALREADY_DELETE_SONG(100025,"歌曲已经删除"),
+
 
     NO_CORRESPONDING_IMAGE(100026,"没有对应的识别结果");
 

@@ -20,8 +20,6 @@ public interface PatientService extends IService<Patient> {
 
     ApiRestResponse<Map<String,Integer>> signCount(Integer type);
 
-
-
     ApiRestResponse<Map<String,List<Integer>>> signRecord();
 
     ApiRestResponse<String> bind(String openId);

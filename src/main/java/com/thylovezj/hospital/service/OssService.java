@@ -5,6 +5,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface OssService {
-
-    String uploadAvatar(MultipartFile file) throws IOException;
+    /**
+     *
+     * @param file
+     * @param uploadUri
+     * @return
+     * @throws IOException
+     */
+    String upload(MultipartFile file,String uploadUri) throws IOException;
 }

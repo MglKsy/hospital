@@ -4,30 +4,34 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.thylovezj.hospital.pojo.Folder;
 import lombok.Data;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-@TableName(value ="xdu_hospital_file")
+@TableName(value ="xdu_hospital_exercise")
 @Data
-public class FileVo {
+public class ExerciseVo implements Serializable {
 
-    private String oldName;
+    /**
+     * 训练时长
+     */
+    private String exTime;
 
-    private String fileSize;
+    /**
+     * 训练类型
+     */
+    private Integer exType;
 
-    private String filePath;
+    /**
+     * 训练得分
+     */
+    private Integer score;
 
-    private String fileType;
-
-    private Date updateTime;
-
-    private String dirId;
-
-
+    /**
+     * 训练日期(结束)
+     */
+    private Date exDate;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

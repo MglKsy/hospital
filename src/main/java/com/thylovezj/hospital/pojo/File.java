@@ -8,6 +8,10 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author thylovezj
+ */
+
 @TableName(value ="xdu_hospital_file")
 @Data
 public class File {
@@ -16,7 +20,7 @@ public class File {
 
     private String oldName;
 
-    private double fileSize;
+    private String fileSize;
 
     private String filePath;
 
@@ -26,7 +30,7 @@ public class File {
 
     private Date updateTime;
 
-    private long dirId;
+    private String dirId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

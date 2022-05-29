@@ -31,7 +31,7 @@ public class CgcAnswerServiceImpl implements CgcAnswerService {
     @Resource
     CgcResultMapper cgcResultMapper;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void uploadAns(List<CgcAnswerReq> cgcAnswerReqList) {
 
