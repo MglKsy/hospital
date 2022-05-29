@@ -45,10 +45,10 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
         List<FolderVo> folders;
         if (StrUtil.isBlank(folderId)) {
             //如果folderId为空，说明需要查询所有根目录下文件夹
-            folders = FindFordersInDatabases("", "sss");
+            folders = FindFordersInDatabases("", UserHolder.getId());
         } else {
             //如果folderId不为空，说明需要查询所有folderId下的文件夹
-            folders = FindFordersInDatabases(folderId, "sss");
+            folders = FindFordersInDatabases(folderId, UserHolder.getId());
         }
         return folders;
     }
@@ -81,14 +81,14 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
     @Transactional(rollbackFor = Exception.class)
     public FolderVo addFolder(FolderReq folderReq) {
         Folder folder = new Folder();
-        String id = "sss";
+        String id = UserHolder.getId();
         QueryWrapper<Folder> folderQueryWrapper = new QueryWrapper<Folder>();
         if (StrUtil.isBlank(folderReq.getParentId())) {
             folderQueryWrapper
-                    .eq("user_id", "sss").eq("parent_id", "").eq("folder_name", folderReq.getFolderName());
+                    .eq("user_id", UserHolder.getId()).eq("parent_id", "").eq("folder_name", folderReq.getFolderName());
         } else {
             folderQueryWrapper
-                    .eq("user_id", "sss").eq("parent_id", Convert.toLong(folderReq.getParentId()))
+                    .eq("user_id", UserHolder.getId()).eq("parent_id", Convert.toLong(folderReq.getParentId()))
                     .eq("folder_name", folderReq.getFolderName());
         }
         List<Folder> folders = folderMapper.selectList(folderQueryWrapper);
@@ -119,7 +119,7 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
     public FolderVo listFileAndFolders(String parentId) {
         //根目录
         FolderVo folderVo = new FolderVo();
-        List<FolderVo> folderVos = FindFordersInDatabases(parentId, "sss");
+        List<FolderVo> folderVos = FindFordersInDatabases(parentId, UserHolder.getId());
 
         List<FileVo> fileVos = fileService.getFileList(parentId);
 

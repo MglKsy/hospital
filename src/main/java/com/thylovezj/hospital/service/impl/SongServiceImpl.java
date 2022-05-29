@@ -35,7 +35,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public void addSong(SongReq songReq) {
         Integer songId = songReq.getSongId();
-        String openId = "ddd";
+        String openId = UserHolder.getId();
         LambdaQueryWrapper<Song> songLambdaQueryWrapper = new LambdaQueryWrapper<>();
         songLambdaQueryWrapper.eq(Song::getSongId, songId);
         songLambdaQueryWrapper.eq(Song::getOpenId, openId);
@@ -57,7 +57,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public SongVo removeSong(Integer songId) {
-        String openId = "ddd";
+        String openId = UserHolder.getId();
         LambdaQueryWrapper<Song> songLambdaQueryWrapper = new LambdaQueryWrapper<>();
         songLambdaQueryWrapper.eq(Song::getSongId, songId);
         songLambdaQueryWrapper.eq(Song::getOpenId, openId);
@@ -78,7 +78,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
 
     @Override
     public List<SongVo> getSongList(){
-        String openId = "ddd";
+        String openId = UserHolder.getId();
         QueryWrapper<Song> songQueryWrapper = new QueryWrapper<>();
         songQueryWrapper.eq("open_id", openId);
         List<Song> songs = songMapper.selectList(songQueryWrapper);
