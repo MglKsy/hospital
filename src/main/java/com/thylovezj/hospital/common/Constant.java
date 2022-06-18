@@ -30,5 +30,7 @@ public class Constant {
      */
     public static final String FILE_URI = "xdu_hospital/netdisk/picture";
 
+    public static final String AUDIO_URL = "xdu_hospital/audio";
+
     public static final long MAX_UPLOAD_SIZE = 10485760L;
 }

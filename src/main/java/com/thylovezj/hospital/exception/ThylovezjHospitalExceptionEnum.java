@@ -22,6 +22,10 @@ public enum ThylovezjHospitalExceptionEnum {
     DELETE_INDEX_FAILED(100028,"删除索引失败"),
     BIND_ERROR(20010,"绑定失败"),
 
+    SAVE_VOICE_ERROR(20011,"添加音频失败"),
+
+    NOT_HAVE_VOICE(20012,"子女暂未添加语音包"),
+
     SAVE_PATIENT_INFO_ERROR(20011,"修改老人信息失败"),
     ADD_INDEX_FAILED(100028,"添加索引失败"),
 

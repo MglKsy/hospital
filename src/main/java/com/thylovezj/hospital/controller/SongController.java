@@ -38,6 +38,7 @@ public class SongController {
     @PostMapping("/remove")
     public ApiRestResponse removeSong(@RequestParam Integer songId) {
         SongVo songVo = songService.removeSong(songId);
+        System.out.println();
         return ApiRestResponse.success(songVo);
     }
 
