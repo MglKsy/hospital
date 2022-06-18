@@ -14,6 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.annotation.Resource;
 
 
+/**
+ * @author 86185
+ */
 //@Configuration
 //public class WebConfig implements WebMvcConfigurer {
 //    @Resource

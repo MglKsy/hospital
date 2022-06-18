@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 
 import javax.annotation.Resource;
@@ -53,7 +54,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         //将s转为 jsonObject并得到openid 微信接口服务返回session_key和open_id
         JSONObject jsonObject = JSON.parseObject(s);
         String openid = (String) jsonObject.get("openid");
-
 
         //检查openid是否存在于数据库
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();

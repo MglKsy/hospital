@@ -86,7 +86,11 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
     }
 
 
-
+    /**
+     *
+     * @param type 签到种类 0-计算本月签到天数, 1-否则计算截止今天签到天数
+     * @return
+     */
     @Override
     public ApiRestResponse<Map<String,Integer>> signCount(Integer type) {
         //1、获取key
@@ -157,6 +161,7 @@ public class PatientServiceImpl extends ServiceImpl<PatientMapper, Patient>
 
         String key = getSignKsy();
 
+        // 获取到签到结果
         List<Long> result = getResult(key);
         //如果为空,说明该用户无签到
         if (result == null || result.isEmpty()){
